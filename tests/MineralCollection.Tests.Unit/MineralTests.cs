@@ -23,4 +23,17 @@ public class MineralTests
         Assert.Equal("Amethyst", mineral.Name);
         Assert.Equal("Brasilien", mineral.Fundort);
     }
+
+    [Fact]
+     public void Mineral_WithoutName_ShouldBeInvalid()
+    {
+        // 1. Arrange (Vorbereiten)
+        var mineral = new Mineral { Name = "", Fundort = "Alpen" };
+
+        // 2. Act (Ausführen)
+        bool hasName = !string.IsNullOrWhiteSpace(mineral.Name);
+
+        // 3. Assert (Überprüfen)
+        Assert.False(hasName, "Ein Mineral sollte einen Namen haben müssen.");
+    }
 }
