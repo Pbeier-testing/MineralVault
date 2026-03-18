@@ -36,4 +36,20 @@ public class MineralsController : ControllerBase
         // Gibt einen 201 Statuscode zurück
         return CreatedAtAction(nameof(GetMinerals), new { id = mineral.Id }, mineral);
     }
+
+    // DELETE: api/minerals/{id}
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteMineral(int id)
+    {
+        var mineral = await _context.Minerals.FindAsync(id);
+        if (mineral == null)
+        {
+            return NotFound(); // 404, falls die ID nicht existiert
+        }
+
+    _context.Minerals.Remove(mineral);
+    await _context.SaveChangesAsync();
+
+    return NoContent(); // 204, erfolgreiches Löschen ohne Rückgabewert
+}
 }
