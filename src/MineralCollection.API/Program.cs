@@ -24,6 +24,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.EnableDetailedErrors();
 });
 
+// CORS-Policy hinzufügen, um Anfragen von Blazor WebAssembly zu erlauben
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazor",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Datenbank und die dazugehörigen Tabellen müssen erstellt werden falls nicht vorhanden. Wichtig für 
@@ -45,8 +54,8 @@ if (app.Environment.IsDevelopment())
 
 // Standard-Sicherheitseinstellungen
 app.UseHttpsRedirection();
+app.UseCors("AllowBlazor");
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
