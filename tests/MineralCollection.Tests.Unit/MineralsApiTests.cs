@@ -32,4 +32,26 @@ public class MineralsApiTests : IClassFixture<WebApplicationFactory<Program>>
         // 3. Assert: Prüfen, ob die API den Fehler 400 (Bad Request) zurückgibt
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
+
+    [Fact]
+    public async Task Put_UpdateExistingMineral_ReturnsNoContent()
+    {
+        // 1. Arrange: Ein Mineral anlegen und die ID abrufen
+        var initialMineral = new Mineral { Name = "Original", Fundort = "Erde" };
+        var postResponse = await _client.PostAsJsonAsync("/api/minerals", initialMineral);
+        var createdMineral = await postResponse.Content.ReadFromJsonAsync<Mineral>();
+
+        // 2. Act: Daten ändern und Update-Request senden
+        createdMineral!.Name = "Updated Name";
+        var putResponse = await _client.PutAsJsonAsync($"/api/minerals/{createdMineral.Id}", createdMineral);
+
+        // 3. Assert: Validierung der Ergebnisse
+        Assert.Equal(HttpStatusCode.NoContent, putResponse.StatusCode);
+
+        // Verifizieren, dass die Änderung in der DB angekommen ist
+        var getResponse = await _client.GetFromJsonAsync<Mineral>($"/api/minerals/{createdMineral.Id}");
+        Assert.NotNull(getResponse);
+        Assert.Equal("Updated Name", getResponse.Name);
+    }
+
 }
