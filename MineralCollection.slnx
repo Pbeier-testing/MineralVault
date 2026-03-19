@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/MineralCollection.API/MineralCollection.API.csproj" />
     <Project Path="src/MineralCollection.Domain/MineralCollection.Domain.csproj" />
+    <Project Path="src/MineralCollection.Frontend/MineralCollection.Frontend.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/MineralCollection.Tests.Unit/MineralCollection.Tests.Unit.csproj" />
