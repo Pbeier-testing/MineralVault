@@ -5,27 +5,33 @@ namespace MineralCollection.Domain;
 public class Mineral
 {
     public int Id { get; set; }
+    public string? Nummer { get; set; }
 
-    [Required(ErrorMessage = "Name is required")]
-    [StringLength(100)]
-    public string Name { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Der Name des Hauptminerals ist Pflicht.")]
+    public required string Name { get; set; }
 
-    [Required(ErrorMessage = "Location is required")]
-    public string Fundort { get; set; } = string.Empty;
+    public string? Begleitmineral { get; set; }
+    public string? Fundort { get; set; }
+    public string? Region { get; set; }
+    public string? Land { get; set; }
 
-    public DateTime Funddatum { get; set; }
 
-    public string Beschreibung { get; set; } = string.Empty;
-    
-    // Geografische Koordinaten
-    // Breitengrad sollte zwischen -90 und 90 liegen
-    [Range(-90, 90)]
-    public double Breitengrad { get; set; }
+    [Range(-90, 90, ErrorMessage = "Breitengrad muss zwischen -90 und 90 liegen.")]
+    public double? Breitengrad { get; set; }
 
-    // Längengrad sollte zwischen -180 und 180 liegen
-    [Range(-180, 180)]
-    public double Laengengrad { get; set; }
-    
-    // Url zum Bild des Minerals
-    public string? BildUrl { get; set; }
+    [Range(-180, 180, ErrorMessage = "Längengrad muss zwischen -180 und 180 liegen.")]
+    public double? Laengengrad { get; set; }
+
+    public string? Bemerkungen { get; set; }
+
+
+    public List<MineralImage> Images { get; set; } = new();
+}
+
+public class MineralImage
+{
+    public int Id { get; set; }
+    public string? FileName { get; set; }
+    public string? Caption { get; set; }
+    public int MineralId { get; set; } // Fremdschlüssel
 }
