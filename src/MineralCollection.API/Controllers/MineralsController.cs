@@ -19,10 +19,12 @@ public class MineralsController : ControllerBase
 
     // GET: api/minerals
     [HttpGet]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<Mineral>>> GetMinerals()
     {
-        // Abruf aller Mineralien aus der DB und Rückgabe als Liste
-        return await _context.Minerals.ToListAsync();
+        return await _context.Minerals
+                             .Include(m => m.Images) // Eager Loading: Bilder direkt mitladen
+                             .ToListAsync();
     }
 
     // GET: api/minerals/{id}
@@ -99,6 +101,69 @@ public class MineralsController : ControllerBase
         }
 
         return NoContent(); // 204: Erfolgreich aktualisiert, kein Rückgabe-Inhalt nötig
+    }
+
+    [HttpPost("import-csv")]
+    public async Task<IActionResult> ImportCsv()
+    {
+        var path = "Mineralien3.csv"; // Liegt im API-Ordner
+        if (!System.IO.File.Exists(path)) return NotFound("CSV nicht gefunden");
+
+        using var reader = new System.IO.StreamReader(path, System.Text.Encoding.Default);
+        // Header überspringen
+        await reader.ReadLineAsync();
+
+        while (!reader.EndOfStream)
+        {
+            var line = await reader.ReadLineAsync();
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            // Dieser Regex-Trick splittet nur an Kommas, die NICHT in Anführungszeichen stehen
+            var parts = System.Text.RegularExpressions.Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+            try
+            {
+                var mineral = new Mineral
+                {
+                    Nummer = parts[1].Trim('"'),
+                    Name = parts[2].Trim('"'),
+                    Begleitmineral = parts[3].Trim('"'),
+                    Fundort = parts[4].Trim('"'),
+                    Region = parts[5].Trim('"'),
+                    Land = parts[6].Trim('"'),
+                    Bemerkungen = parts[11].Trim('"')
+                };
+
+                // Koordinaten splitten: "lat, lon" -> 47.65, 23.82
+                var coords = parts[7].Trim('"').Split(',');
+                if (coords.Length == 2 && double.TryParse(coords[0], System.Globalization.CultureInfo.InvariantCulture, out var lat))
+                {
+                    mineral.Breitengrad = lat;
+                    if (double.TryParse(coords[1], System.Globalization.CultureInfo.InvariantCulture, out var lon))
+                        mineral.Laengengrad = lon;
+                }
+
+                // Bilder 1 bis 6 prüfen
+                for (int i = 12; i <= 17; i++)
+                {
+                    var imgName = parts[i].Trim('"');
+                    if (!string.IsNullOrWhiteSpace(imgName))
+                    {
+                        mineral.Images.Add(new MineralImage { FileName = imgName + ".JPG" });
+                    }
+                }
+
+                _context.Minerals.Add(mineral);
+            }
+            catch (Exception ex)
+            {
+                // Ein einzelner Fehler soll nicht den ganzen Import stoppen
+                Console.WriteLine($"Fehler in Zeile: {line}. Fehler: {ex.Message}");
+            }
+        }
+
+        await _context.SaveChangesAsync();
+        return Ok("Import abgeschlossen!");
     }
 
 }
