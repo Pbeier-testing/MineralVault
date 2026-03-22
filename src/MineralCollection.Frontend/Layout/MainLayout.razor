@@ -1,16 +1,25 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
+<div class="page">
     <main>
+        @* Obere Navigationsleiste *@
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            <h4 class="mt-2">MineralVault <span class="badge bg-secondary" style="font-size: 0.5em">v1.0</span></h4>
+            <a href="https://github.com/dein-profil" target="_blank">Portfolio</a>
         </div>
 
-        <article class="content px-4">
+        <article class="content-container">
             @Body
         </article>
     </main>
 </div>
+
+<style>
+    /* Stellt sicher, dass der Hauptinhalt den verfügbaren Platz einnimmt.*/
+    .content-container {
+        height: calc(100vh - 3.5rem);
+        /* Abzüglich der Top-Row */
+        display: flex;
+        flex-direction: column;
+    }
+</style>

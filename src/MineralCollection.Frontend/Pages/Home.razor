@@ -2,51 +2,143 @@
 @using MineralCollection.Domain
 @inject HttpClient Http
 
-<PageTitle>MineralVault - Collection</PageTitle>
+<div class="container-fluid h-100 p-0">
+    <div class="row g-0 h-100">
 
-<h1>My Mineral Collection</h1>
+        @* Linke Seite: Die Karte (66% Breite) *@
+        <div class="col-lg-8 col-md-7 position-relative bg-light border-end">
+            <div id="map" style="height: 100%; width: 100%;">
+                <div class="d-flex h-100 align-items-center justify-content-center">
+                    <p class="text-muted">Karte wird geladen...</p>
+                </div>
+            </div>
+        </div>
 
-@if (minerals == null)
-{
-    <p><em>Loading your minerals...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var m in minerals)
-            {
-                <tr>
-                    <td>@m.Name</td>
-                    <td>@m.Fundort</td>
-                    <td>@m.Beschreibung</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        @* Rechte Seite: Die Galerie (33% Breite) *@
+        <div class="col-lg-4 col-md-5 d-flex flex-column bg-white">
+            <div class="p-3 border-bottom bg-light">
+                <input type="text" class="form-control" placeholder="Mineral suchen..." />
+            </div>
+
+            <div class="overflow-auto flex-grow-1 p-2" style="max-height: calc(100vh - 8rem);">
+                @if (minerals == null)
+                {
+                    <div class="text-center p-5">
+                        <div class="spinner-border text-primary" role="status"></div>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var m in minerals)
+                    {
+                        <div class="card mb-2 shadow-sm mineral-card" @onmouseover="() => HandleHover(m.Id)">
+                            <div class="card-body p-2 d-flex">
+
+                                @* Vorschaubild Bereich *@
+                                <div class="me-3">
+                                    @if (m.Images != null && m.Images.Any())
+                                    {
+                                        @* Pfad ist relativ zu wwwroot *@
+                                        <img src="images/@m.Images.First().FileName"
+                                             style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;"
+                                             alt="@m.Name" />
+                                    }
+                                    else
+                                    {
+                                        <div class="img-placeholder text-center" style="width: 80px; height: 80px;">
+                                            <span style="font-size: 0.6em; line-height: 1;">Kein Bild vorhanden</span>
+                                        </div>
+                                    }
+                                </div>
+
+                                @* Text Bereich *@
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="mb-0 fw-bold text-primary">@m.Name</h6>
+                                        <small class="text-muted">#@m.Nummer</small>
+                                    </div>
+
+                                    <p class="mb-1 small text-truncate" style="max-width: 200px;">
+                                        <span class="text-secondary">📍</span> @m.Fundort
+                                    </p>
+
+                                    @if (!string.IsNullOrEmpty(m.Begleitmineral))
+                                    {
+                                        <p class="mb-1 extra-small text-muted" style="font-size: 0.75rem;">
+                                            <span class="fw-bold">Begleitet von:</span> @m.Begleitmineral
+                                        </p>
+                                    }
+
+                                    <div class="d-flex justify-content-end mt-1">
+                                        <button class="btn btn-sm btn-link p-0 text-decoration-none" style="font-size: 0.8rem;">
+                                            Details →
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .mineral-card {
+        transition: all 0.2s ease-in-out;
+        border: none;
+        border-left: 4px solid transparent;
+        cursor: pointer;
+    }
+
+    .mineral-card:hover {
+        border-left: 4px solid #0d6efd;
+        transform: translateX(5px);
+        background-color: #f8f9fa;
+    }
+
+    .img-placeholder {
+        width: 80px;
+        height: 80px;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        color: #adb5bd;
+    }
+</style>
+
+@inject IJSRuntime JSRuntime
 
 @code {
-    private Mineral[]? minerals;
+    private List<Mineral>? minerals;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Karte initialisieren (Zentriert auf Europa)
+            await JSRuntime.InvokeVoidAsync("mapBox.initialize", 50.0, 10.0, 4);
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        // API-Aufruf, um die Mineralien zu laden.
-        // Fehlerbehandlung hinzugefügt, um mögliche Probleme beim Laden der Daten zu erkennen und zu protokollieren.
-        try
+        minerals = await Http.GetFromJsonAsync<List<Mineral>>("api/minerals");
+
+        // Sobald Daten da sind, Marker an JS senden
+        if (minerals != null)
         {
-            minerals = await Http.GetFromJsonAsync<Mineral[]>("api/minerals");
+            await JSRuntime.InvokeVoidAsync("mapBox.addMarkers", minerals);
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
+    }
+
+    // Das Hover-Feature
+    private async Task HandleHover(int id)
+    {
+        await JSRuntime.InvokeVoidAsync("mapBox.focusMineral", id);
     }
 }
