@@ -14,12 +14,14 @@ public class Mineral
     public string? Fundort { get; set; }
     public string? Region { get; set; }
     public string? Land { get; set; }
+    public int? Fundjahr { get; set; }
+    public int? Erwerbsjahr { get; set; }
 
 
-    [Range(-90, 90, ErrorMessage = "Breitengrad muss zwischen -90 und 90 liegen.")]
+    [Range(-90.0, 90.0, ErrorMessage = "Breitengrad muss zwischen -90 und 90 liegen.")]
     public double? Breitengrad { get; set; }
 
-    [Range(-180, 180, ErrorMessage = "Längengrad muss zwischen -180 und 180 liegen.")]
+    [Range(-180.0, 180.0, ErrorMessage = "Längengrad muss zwischen -180 und 180 liegen.")]
     public double? Laengengrad { get; set; }
 
     public string? Bemerkungen { get; set; }
