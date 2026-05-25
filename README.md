@@ -14,7 +14,8 @@ This project is part of my portfolio and focuses on combining **software develop
 
 * Manage mineral entries
 * Store and display images
-* Track find locations (map integration planned)
+* Explorer view with Leaflet map
+* Admin table with inline editing
 
 ---
 
@@ -23,9 +24,10 @@ This project is part of my portfolio and focuses on combining **software develop
 The project follows a simplified **Clean Architecture** approach:
 
 * `Domain` – Core entities and business logic
-* `Application` – Use cases and interfaces *(planned)*
+* `Frontend` – Blazor UI framework
 * `API` – ASP.NET Core Web API
-* `Infrastructure` – Database and external services *(planned)*
+* `Tests` 
+  
 
 This structure keeps the code modular, testable, and easy to extend.
 
@@ -43,7 +45,7 @@ This structure keeps the code modular, testable, and easy to extend.
 
 **Frontend**
 
-* Blazor WebAssembly *(in progress)*
+* Blazor WebAssembly
 
 **Testing**
 
@@ -66,7 +68,7 @@ With a background in software testing (ISTQB Foundation Level), I place a strong
 * Automated test execution via CI pipeline
 
 **Detailed testing documentation:**
-See [`/docs/testing`](docs/testing)
+See [`/docs/](docs/)
 
 ---
 
@@ -116,9 +118,8 @@ See [`/docs/testing`](docs/testing)
 * [x] Initial project setup
 * [x] SQLite integration
 * [x] Basic CI pipeline
-* [ ] Application layer (use cases)
-* [ ] Frontend integration (Blazor)
-* [ ] Map visualization (Leaflet)
+* [x] Frontend integration (Blazor)
+* [x] Map visualization (Leaflet)
 * [ ] Integration tests
 * [ ] E2E tests with Playwright
 
