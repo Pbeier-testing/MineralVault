@@ -19,7 +19,6 @@ public class MineralsController : ControllerBase
 
     // GET: api/minerals
     [HttpGet]
-    [HttpGet]
     public async Task<ActionResult<IEnumerable<Mineral>>> GetMinerals()
     {
         return await _context.Minerals
@@ -58,16 +57,47 @@ public class MineralsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMineral(int id)
     {
-        var mineral = await _context.Minerals.FindAsync(id);
-        if (mineral == null)
+        // 1. Mineral inkl. Bilder laden
+        var mineral = await _context.Minerals
+            .Include(m => m.Images)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (mineral == null) return NotFound();
+
+        // 2. Pfad zum Frontend-Ordner manuell zusammenbauen
+        var currentDir = Directory.GetCurrentDirectory();
+        var imagesPath = Path.GetFullPath(Path.Combine(currentDir, "..", "MineralCollection.Frontend", "wwwroot", "images"));
+
+        // 3. Physische Dateien löschen
+        if (mineral.Images != null)
         {
-            return NotFound(); // 404, falls die ID nicht existiert
+            foreach (var img in mineral.Images)
+            {
+                if (!string.IsNullOrEmpty(img.FileName))
+                {
+                    var filePath = Path.Combine(imagesPath, img.FileName);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        try
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Falls die Datei blockiert ist, loggen wir es nur, 
+                            // damit das Löschen des DB-Eintrags trotzdem weitergeht
+                            Console.WriteLine($"Fehler beim Löschen der Datei: {ex.Message}");
+                        }
+                    }
+                }
+            }
         }
 
+        // 4. Aus Datenbank löschen
         _context.Minerals.Remove(mineral);
         await _context.SaveChangesAsync();
 
-        return NoContent(); // 204, erfolgreiches Löschen ohne Rückgabewert
+        return NoContent();
     }
 
     // PUT: api/minerals/{id}
@@ -131,7 +161,9 @@ public class MineralsController : ControllerBase
                     Fundort = parts[4].Trim('"'),
                     Region = parts[5].Trim('"'),
                     Land = parts[6].Trim('"'),
-                    Bemerkungen = parts[11].Trim('"')
+                    Bemerkungen = parts[10].Trim('"'),
+                    Fundjahr = int.TryParse(parts[8].Trim('"'), out var fjahr) ? fjahr : null,
+                    Erwerbsjahr = int.TryParse(parts[9].Trim('"'), out var ejahr) ? ejahr : null
                 };
 
                 // Koordinaten splitten: "lat, lon" -> 47.65, 23.82
@@ -144,7 +176,7 @@ public class MineralsController : ControllerBase
                 }
 
                 // Bilder 1 bis 6 prüfen
-                for (int i = 12; i <= 17; i++)
+                for (int i = 11; i <= 16; i++)
                 {
                     var imgName = parts[i].Trim('"');
                     if (!string.IsNullOrWhiteSpace(imgName))

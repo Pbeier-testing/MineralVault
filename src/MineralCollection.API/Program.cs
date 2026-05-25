@@ -4,6 +4,7 @@ using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseStaticWebAssets();
 // Controller-Unterstützung
 builder.Services.AddControllers();
 
