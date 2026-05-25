@@ -116,5 +116,25 @@ window.mapBox = {
                 map.invalidateSize();
             }, 250);
         }
+    },
+
+    initPicker: function (dotNetHelper, startLat, startLon) {
+        if (this.pickerMap) { this.pickerMap.remove(); }
+
+        this.pickerMap = L.map('pickerMap').setView([startLat, startLon], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.pickerMap);
+
+        let marker = L.marker([startLat, startLon]).addTo(this.pickerMap);
+
+        this.pickerMap.on('click', (e) => {
+            const { lat, lng } = e.latlng;
+            marker.setLatLng(e.latlng);
+
+            // Aufruf der C#-Methode [JSInvokable]
+            dotNetHelper.invokeMethodAsync('UpdateActiveCoordinates',
+                lat.toFixed(6).toString(),
+                lng.toFixed(6).toString());
+        });
     }
+
 };
