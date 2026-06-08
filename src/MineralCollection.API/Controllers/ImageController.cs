@@ -1,7 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MineralCollection.API.Data;
-using MineralCollection.Domain;
 
 namespace MineralCollection.API.Controllers;
 
@@ -9,11 +6,11 @@ namespace MineralCollection.API.Controllers;
 [ApiController]
 public class ImageController : ControllerBase
 {
-    private readonly IWebHostEnvironment _env;
+    private readonly IConfiguration _configuration;
 
-    public ImageController(IWebHostEnvironment env)
+    public ImageController(IConfiguration configuration)
     {
-        _env = env;
+        _configuration = configuration;
     }
 
     [HttpPost("upload")]
@@ -21,8 +18,7 @@ public class ImageController : ControllerBase
     {
         if (file == null || file.Length == 0) return BadRequest("Keine Datei");
 
-        var currentDir = Directory.GetCurrentDirectory();
-        var imagesPath = Path.GetFullPath(Path.Combine(currentDir, "..", "MineralCollection.Frontend", "wwwroot", "images"));
+        var imagesPath = GetImagesPath();
 
         // Erstelle den Ordner, falls er fehlt
         if (!Directory.Exists(imagesPath))
@@ -44,8 +40,7 @@ public class ImageController : ControllerBase
     [HttpDelete("{fileName}")]
     public IActionResult DeleteImage(string fileName)
     {
-        var currentDir = Directory.GetCurrentDirectory();
-        var imagesPath = Path.GetFullPath(Path.Combine(currentDir, "..", "MineralCollection.Frontend", "wwwroot", "images"));
+        var imagesPath = GetImagesPath();
         var filePath = Path.Combine(imagesPath, fileName);
 
         if (System.IO.File.Exists(filePath))
@@ -56,4 +51,15 @@ public class ImageController : ControllerBase
         return NotFound();
     }
 
+    private string GetImagesPath()
+    {
+        var configuredPath = _configuration["ImageStorage:Path"];
+        if (!string.IsNullOrWhiteSpace(configuredPath))
+        {
+            return Path.GetFullPath(configuredPath);
+        }
+
+        var currentDir = Directory.GetCurrentDirectory();
+        return Path.GetFullPath(Path.Combine(currentDir, "..", "MineralCollection.Frontend", "wwwroot", "images"));
+    }
 }

@@ -41,7 +41,7 @@ Integration Tests prüfen das Zusammenspiel von API, Datenbank und Dateisystem.
 ## ITC-IMG-001 - Bilddatei speichern
 
 **Related Requirements:** R7.4  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** Integration  
 **Automation:** xUnit, WebApplicationFactory, temporäres Bildverzeichnis  
 
@@ -52,7 +52,7 @@ Integration Tests prüfen das Zusammenspiel von API, Datenbank und Dateisystem.
 ## ITC-IMG-002 - Bildverweis beim Löschen entfernen
 
 **Related Requirements:** R9.9  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** Integration  
 **Automation:** xUnit, WebApplicationFactory, SQLite-Testdatenbank  
 
@@ -62,7 +62,7 @@ Integration Tests prüfen das Zusammenspiel von API, Datenbank und Dateisystem.
 ## ITC-IMG-003 - Bilddatei beim Löschen entfernen
 
 **Related Requirements:** R9.10  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** Integration  
 **Automation:** xUnit, WebApplicationFactory, temporäres Bildverzeichnis  
 

@@ -1,4 +1,4 @@
-# Test Cases - MineralCollection App
+# Test Cases - Mineral Vault App
 
 Diese Testcase-Sammlung basiert auf den aktuellen Requirements und der `docs/test_matrix.md`.
 

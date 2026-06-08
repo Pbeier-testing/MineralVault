@@ -50,7 +50,7 @@ Statuswerte:
 | R7.1 Thumbnail anzeigen | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R7.2 Platzhalterbild anzeigen | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R7.3 Bild ändern | Open | E2E | Playwright | Open | Testfall noch formulieren |
-| R7.4 Bild speichern | ITC-IMG-001 | Integration | xUnit | Open | API und Dateisystem |
+| R7.4 Bild speichern | ITC-IMG-001 | Integration | xUnit | Covered | Bildupload und Dateispeicherung getestet |
 | R7.5 Genau ein Bild pro Mineral | UTC-IMAGE-001, UTC-IMAGE-002, ITC-CSV-001 | Unit/Integration | xUnit | Covered | Unit-Tests für Bildersetzung vorhanden; Integration offen |
 | R8.1 Koordinaten manuell bearbeiten | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R8.2 Koordinaten-Popup öffnen | E2E-COORD-001, E2E-COORD-002 | E2E | Playwright | Open | Popup sichtbar |
@@ -66,8 +66,8 @@ Statuswerte:
 | R9.6 Löschung abbrechen | UTC-DELETE-001, E2E-DELETE-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Test vorhanden; E2E offen |
 | R9.7 Löschung bestätigen | UTC-DELETE-002, UTC-DELETE-003, E2E-DELETE-002 | Unit/E2E | xUnit, Playwright | Covered | Unit-Test für UI-Entfernung vorhanden; E2E offen |
 | R9.8 Gespeichertes Mineral aus Datenbank löschen | UTC-DELETE-002, ITC-API-003 | Unit/Integration | xUnit | Covered | DELETE im ViewModel und API-Persistenz getestet |
-| R9.9 Bildverweis beim Löschen entfernen | ITC-IMG-002 | Integration | xUnit | Open | DB-Beziehung |
-| R9.10 Bilddatei beim Löschen entfernen | UTC-DELETE-003, ITC-IMG-003 | Unit/Integration | xUnit | Open | Dateisystem-Integration offen |
+| R9.9 Bildverweis beim Löschen entfernen | ITC-IMG-002 | Integration | xUnit | Covered | Bildverweis-Löschung beim Mineral-Delete getestet |
+| R9.10 Bilddatei beim Löschen entfernen | UTC-DELETE-003, ITC-IMG-003 | Unit/Integration | xUnit | Covered | Bilddatei-Löschung beim Mineral-Delete getestet |
 | R10.1 Pflichtfeld Hauptmineral | UTC-VAL-001 | Unit/E2E | xUnit, Playwright | Covered | Model-Validierung getestet; UI offen |
 | R10.2 Breitengrad validieren | UTC-VAL-002, UTC-VAL-003 | Unit/E2E | xUnit, Playwright | Covered | Model-Grenzwerte getestet; UI offen |
 | R10.3 Längengrad validieren | UTC-VAL-004, UTC-VAL-005 | Unit/E2E | xUnit, Playwright | Covered | Model-Grenzwerte getestet; UI offen |
@@ -75,4 +75,3 @@ Statuswerte:
 | R11.1 Scrollbare Listen | MTC-UI-001, MTC-UI-003 | Manual | Manual | Manual | Visuelle Bedienbarkeit |
 | R11.2 Bedienbarkeit | MTC-UI-002, MTC-UI-003 | Manual | Manual | Manual | Mausbedienung |
 | R11.3 Datenkonsistenz | ITC-API-001, ITC-API-002, ITC-API-003 | Integration/E2E | xUnit, Playwright | Covered | API-Datenkonsistenz für Speichern, Aktualisieren und Löschen getestet |
-

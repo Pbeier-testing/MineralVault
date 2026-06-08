@@ -10,11 +10,13 @@ namespace MineralCollection.API.Controllers;
 public class MineralsController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private readonly IConfiguration _configuration;
 
     // Datenbank-Kontext wird injiziert, um Verbindung zur DB herzustellen
-    public MineralsController(AppDbContext context)
+    public MineralsController(AppDbContext context, IConfiguration configuration)
     {
         _context = context;
+        _configuration = configuration;
     }
 
     // GET: api/minerals
@@ -65,8 +67,7 @@ public class MineralsController : ControllerBase
         if (mineral == null) return NotFound();
 
         // 2. Pfad zum Frontend-Ordner manuell zusammenbauen
-        var currentDir = Directory.GetCurrentDirectory();
-        var imagesPath = Path.GetFullPath(Path.Combine(currentDir, "..", "MineralCollection.Frontend", "wwwroot", "images"));
+        var imagesPath = GetImagesPath();
 
         // 3. Physische Dateien löschen
         if (mineral.Images != null)
@@ -198,4 +199,15 @@ public class MineralsController : ControllerBase
         return Ok("Import abgeschlossen!");
     }
 
+    private string GetImagesPath()
+    {
+        var configuredPath = _configuration["ImageStorage:Path"];
+        if (!string.IsNullOrWhiteSpace(configuredPath))
+        {
+            return Path.GetFullPath(configuredPath);
+        }
+
+        var currentDir = Directory.GetCurrentDirectory();
+        return Path.GetFullPath(Path.Combine(currentDir, "..", "MineralCollection.Frontend", "wwwroot", "images"));
+    }
 }
