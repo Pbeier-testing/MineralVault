@@ -4,134 +4,188 @@
 ![.NET](https://img.shields.io/badge/.NET-10.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-A full-stack application for managing a personal mineral collection, including location tracking and image support.
+MineralVault ist eine Fullstack-Anwendung zur Verwaltung einer privaten Mineraliensammlung. Die App kombiniert eine interaktive Kartenansicht, eine tabellarische Verwaltungsansicht, Bildverwaltung, Koordinatenpflege und eine ASP.NET Core Web API mit SQLite-Datenbank.
 
-This project is part of my portfolio and focuses on combining **software development** with **structured testing practices**.
-
----
-
-## Features
-
-* Manage mineral entries
-* Store and display images
-* Explorer view with Leaflet map
-* Admin table with inline editing
+Das Projekt dient gleichzeitig als Portfolio-Projekt, um praktische Fullstack-Entwicklung mit einem strukturierten, ISTQB-orientierten Testprozess zu verbinden. Ziel ist nicht nur eine funktionierende Anwendung, sondern auch nachvollziehbare Qualitätssicherung durch Requirements, Teststrategie, Testfälle, Testmatrix, automatisierte Tests und CI/CD.
 
 ---
 
-## Architecture
+## Funktionsumfang
 
-The project follows a simplified **Clean Architecture** approach:
-
-* `Domain` – Core entities and business logic
-* `Frontend` – Blazor UI framework
-* `API` – ASP.NET Core Web API
-* `Tests` 
-  
-
-This structure keeps the code modular, testable, and easy to extend.
+- Kartenansicht mit Mineral-Markern auf Basis gespeicherter Koordinaten
+- Marker-Clustering beim Herauszoomen und Auflösen der Cluster beim Hineinzoomen
+- Popups mit Bild, Mineralname und Fundort
+- Explorer-Liste neben der Karte mit Bild, Name, Fundort und Bemerkungen
+- Suche und Sortierung der Mineralien
+- Tabellenansicht zur Verwaltung der Sammlung
+- Inline-Bearbeitung von Mineral-Daten
+- Bild-Upload und Bildvorschau
+- Koordinatenpflege per Eingabefeld und Karten-Popup
+- Anlegen neuer Mineralien
+- Löschen mit Bestätigungsdialog
+- CSV-Import für bestehende Sammlungsdaten
 
 ---
 
-## Tech Stack
+## Testprozess
+
+Ein zentraler Bestandteil des Projekts ist der Aufbau eines nachvollziehbaren Testprozesses. Die Testdokumentation liegt im Ordner [docs](docs/).
+
+Aktuell vorhanden:
+
+- [Requirements](docs/requirements.md)
+- [Teststrategie](docs/test_strategy.md)
+- [Testmatrix](docs/test_matrix.md)
+- [Testfälle](docs/test_cases/README.md)
+- Unit Tests mit xUnit
+- GitHub Actions Pipeline für Build und Tests
+
+Die Testmatrix verknüpft Requirements mit Testfällen, Testlevel, Automatisierung und Status. Dadurch wird sichtbar, welche Anforderungen bereits abgedeckt sind, welche Tests noch offen sind und wo Tests bewusst Soll/Ist-Abweichungen dokumentieren.
+
+Geplante Testlevel:
+
+- **Unit Tests:** Domain-Validierung, Such- und Sortierlogik, ViewModel-Verhalten
+- **Integration Tests:** API, SQLite-Testdatenbank, Bilddateien, CSV-Import
+- **E2E Tests:** zentrale UI-Flows mit Playwright
+- **Manuelle Tests:** visuelle Prüfung, Bedienbarkeit, responsive Darstellung
+
+Hinweis: Einige Unit Tests sind aktuell bewusst rot, weil sie gewünschtes Soll-Verhalten beschreiben, das noch nicht vollständig implementiert ist.
+
+---
+
+## Technologie
 
 **Backend**
 
-* ASP.NET Core Web API (.NET 10)
-* Entity Framework Core
-* SQLite
-* REST API with Swagger UI for testing endpoints
-* Automated testing and CI pipeline
+- ASP.NET Core Web API
+- Entity Framework Core
+- SQLite
+- Swagger/OpenAPI
 
 **Frontend**
 
-* Blazor WebAssembly
+- Blazor WebAssembly
+- Leaflet
+- Bootstrap
 
 **Testing**
 
-* xUnit (unit tests)
-* Playwright (E2E – planned)
+- xUnit
+- Test Doubles für HTTP, JS Interop und Datei-Uploads
+- Playwright geplant
 
 **CI/CD**
 
-* GitHub Actions
+- GitHub Actions
+- Restore, Build und Testausführung
 
 ---
 
-## Testing
+## Projektstruktur
 
-With a background in software testing (ISTQB Foundation Level), I place a strong focus on testability and automated testing.
+```text
+src/
+  MineralCollection.Domain      Domain-Modelle und Validierung
+  MineralCollection.API         REST API, EF Core, SQLite, Bild- und CSV-Funktionen
+  MineralCollection.Frontend    Blazor WebAssembly UI
 
-* Unit tests for business logic
-* Integration tests for API and database *(planned)*
-* End-to-end tests using Playwright *(planned)*
-* Automated test execution via CI pipeline
+tests/
+  MineralCollection.Tests.Unit  Unit Tests
 
-**Detailed testing documentation:**
-See [`/docs/](docs/)
+docs/
+  requirements.md               Anforderungen
+  test_strategy.md              Teststrategie
+  test_matrix.md                Traceability-Matrix
+  test_cases/                   Testfälle nach Testlevel
+```
 
 ---
 
-## Getting Started
+## Lokales Setup
 
-### Prerequisites
+### Voraussetzungen
 
-* .NET 10 SDK
-* EF Core Tools
+- .NET 10 SDK
+- EF Core Tools
 
-  ```bash
-  dotnet tool install --global dotnet-ef
-  ```
+```bash
+dotnet tool install --global dotnet-ef
+```
 
-### Setup
+### Datenbank vorbereiten
 
-1. Clone the repository
+```bash
+dotnet ef database update --project src/MineralCollection.API
+```
 
-   ```bash
-   git clone https://github.com/Pbeier-testing/MineralVault.git
-   cd MineralVault
-   ```
+### API starten
 
-2. Apply database migrations
+```bash
+dotnet run --project src/MineralCollection.API
+```
 
-   ```bash
-   dotnet ef database update --project src/MineralCollection.API
-   ```
+Swagger ist anschließend unter der im Terminal angezeigten URL erreichbar, z. B.:
 
-3. Run the API
+```text
+http://localhost:5247/swagger
+```
 
-   ```bash
-   dotnet run --project src/MineralCollection.API
-   ```
+### Frontend starten
 
-4. Open Swagger UI
-   
-   ```
-   http://localhost:<port>/swagger
-   ```
-   Open Swagger UI using the URL shown in the console output after starting the application.
+```bash
+dotnet run --project src/MineralCollection.Frontend
+```
+
+Das Frontend ist aktuell auf die API-Adresse `http://localhost:5247` ausgelegt.
+
+---
+
+## Tests ausführen
+
+Alle Tests:
+
+```bash
+dotnet test
+```
+
+Nur Unit Tests über Traits:
+
+```bash
+dotnet test --filter "TestLevel=Unit"
+```
+
+Einzelnes Requirement testen:
+
+```bash
+dotnet test --filter "Requirement=R4.13"
+```
+
+Einzelnen Test Case testen:
+
+```bash
+dotnet test --filter "TestCase=UTC-SORT-003"
+```
 
 ---
 
 ## Roadmap
 
-* [x] Initial project setup
-* [x] SQLite integration
-* [x] Basic CI pipeline
-* [x] Frontend integration (Blazor)
-* [x] Map visualization (Leaflet)
-* [ ] Integration tests
-* [ ] E2E tests with Playwright
+- [x] ASP.NET Core API mit SQLite
+- [x] Blazor WebAssembly Frontend
+- [x] Kartenansicht mit Leaflet
+- [x] Tabellenansicht mit Inline-Bearbeitung
+- [x] Bildverwaltung
+- [x] Requirements und Teststrategie
+- [x] Testmatrix und neue Testcase-Struktur
+- [x] erste neue Unit Tests mit Traceability-Traits
+- [ ] bekannte Soll/Ist-Abweichungen beheben
+- [ ] Integrationstestprojekt aufbauen
+- [ ] Playwright E2E Tests einführen
+- [ ] CI Pipeline um Integration und E2E erweitern
 
 ---
 
-## Purpose
+## Ziel des Projekts
 
-This project demonstrates:
+MineralVault soll zeigen, wie eine fachliche Anwendung schrittweise entwickelt und gleichzeitig testbar aufgebaut werden kann. Der Fokus liegt auf sauberer Struktur, nachvollziehbaren Anforderungen, automatisierbaren Tests und transparenter Weiterentwicklung.
 
-* Full-stack development with .NET
-* Clean and maintainable architecture
-* Integration of testing into the development process
-* Use of CI/CD for automated quality assurance
-
----
