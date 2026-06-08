@@ -1,4 +1,4 @@
-# Test Matrix - MineralCollection App
+# Test Matrix - Mineral Vault App
 
 Diese Matrix verbindet Requirements mit Testfällen, Testlevel, Automatisierung und aktuellem Status.
 
@@ -59,13 +59,13 @@ Statuswerte:
 | R8.5 Koordinatenauswahl abbrechen | UTC-COORD-002, E2E-COORD-001 | Unit/E2E | xUnit, Playwright | Failing | Abbrechen behält aktuell nicht die Originalkoordinaten |
 | R8.6 Koordinatenauswahl übernehmen | E2E-COORD-002 | E2E | Playwright | Open | Übernahme testen |
 | R9.1 Änderungen speichern | UTC-SAVE-001, UTC-SAVE-002, UTC-SAVE-003, UTC-SAVE-004 | Unit/Integration/E2E | xUnit, Playwright | Covered | Unit-Tests fürs Speichern vorhanden; Integration offen |
-| R9.2 Neue Mineralien speichern | UTC-SAVE-001, ITC-API-001 | Unit/Integration | xUnit | Covered | POST im ViewModel getestet; DB-Integration offen |
-| R9.3 Geänderte Mineralien speichern | UTC-SAVE-002, ITC-API-002 | Unit/Integration | xUnit | Covered | PUT im ViewModel getestet; DB-Integration offen |
+| R9.2 Neue Mineralien speichern | UTC-SAVE-001, ITC-API-001 | Unit/Integration | xUnit | Covered | POST im ViewModel und API-Persistenz getestet |
+| R9.3 Geänderte Mineralien speichern | UTC-SAVE-002, ITC-API-002 | Unit/Integration | xUnit | Covered | PUT im ViewModel und API-Persistenz getestet |
 | R9.4 Mineral löschen | UTC-DELETE-002, UTC-DELETE-003, E2E-DELETE-001, E2E-DELETE-002 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests fürs Löschen vorhanden; E2E offen |
 | R9.5 Löschbestätigung | E2E-DELETE-001, E2E-DELETE-002 | E2E | Playwright | Open | Dialog erscheint |
 | R9.6 Löschung abbrechen | UTC-DELETE-001, E2E-DELETE-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Test vorhanden; E2E offen |
 | R9.7 Löschung bestätigen | UTC-DELETE-002, UTC-DELETE-003, E2E-DELETE-002 | Unit/E2E | xUnit, Playwright | Covered | Unit-Test für UI-Entfernung vorhanden; E2E offen |
-| R9.8 Gespeichertes Mineral aus Datenbank löschen | UTC-DELETE-002, ITC-API-003 | Unit/Integration | xUnit | Open | DB-Integration offen |
+| R9.8 Gespeichertes Mineral aus Datenbank löschen | UTC-DELETE-002, ITC-API-003 | Unit/Integration | xUnit | Covered | DELETE im ViewModel und API-Persistenz getestet |
 | R9.9 Bildverweis beim Löschen entfernen | ITC-IMG-002 | Integration | xUnit | Open | DB-Beziehung |
 | R9.10 Bilddatei beim Löschen entfernen | UTC-DELETE-003, ITC-IMG-003 | Unit/Integration | xUnit | Open | Dateisystem-Integration offen |
 | R10.1 Pflichtfeld Hauptmineral | UTC-VAL-001 | Unit/E2E | xUnit, Playwright | Covered | Model-Validierung getestet; UI offen |
@@ -74,6 +74,5 @@ Statuswerte:
 | R10.4 Verständliche Fehlermeldungen | UTC-VAL-001, UTC-VAL-003, UTC-VAL-005 | Unit/E2E | xUnit, Playwright | Covered | Model-Fehlermeldungen getestet; UI offen |
 | R11.1 Scrollbare Listen | MTC-UI-001, MTC-UI-003 | Manual | Manual | Manual | Visuelle Bedienbarkeit |
 | R11.2 Bedienbarkeit | MTC-UI-002, MTC-UI-003 | Manual | Manual | Manual | Mausbedienung |
-| R11.3 Datenkonsistenz | ITC-API-001, ITC-API-002, ITC-API-003 | Integration/E2E | xUnit, Playwright | Open | Nach Speichern/Löschen konsistent |
-
+| R11.3 Datenkonsistenz | ITC-API-001, ITC-API-002, ITC-API-003 | Integration/E2E | xUnit, Playwright | Covered | API-Datenkonsistenz für Speichern, Aktualisieren und Löschen getestet |
 

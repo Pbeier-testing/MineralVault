@@ -5,6 +5,7 @@
     <Project Path="src/MineralCollection.Frontend/MineralCollection.Frontend.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/MineralCollection.Tests.Integration/MineralCollection.Tests.Integration.csproj" />
     <Project Path="tests/MineralCollection.Tests.Unit/MineralCollection.Tests.Unit.csproj" />
   </Folder>
 </Solution>

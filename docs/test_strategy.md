@@ -1,4 +1,4 @@
-# Test Strategy - MineralCollection App
+# Test Strategy - Mineral Vault App
 
 ## Ziel
 

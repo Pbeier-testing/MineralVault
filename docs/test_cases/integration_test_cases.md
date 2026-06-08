@@ -5,7 +5,7 @@ Integration Tests prüfen das Zusammenspiel von API, Datenbank und Dateisystem.
 ## ITC-API-001 - Neues Mineral per API speichern
 
 **Related Requirements:** R9.2, R11.3  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** Integration  
 **Automation:** xUnit, WebApplicationFactory, SQLite-Testdatenbank  
 
@@ -21,7 +21,7 @@ Integration Tests prüfen das Zusammenspiel von API, Datenbank und Dateisystem.
 ## ITC-API-002 - Bestehendes Mineral per API aktualisieren
 
 **Related Requirements:** R9.3, R11.3  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** Integration  
 **Automation:** xUnit, WebApplicationFactory, SQLite-Testdatenbank  
 
@@ -31,7 +31,7 @@ Integration Tests prüfen das Zusammenspiel von API, Datenbank und Dateisystem.
 ## ITC-API-003 - Gespeichertes Mineral löschen
 
 **Related Requirements:** R9.8, R11.3  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** Integration  
 **Automation:** xUnit, WebApplicationFactory, SQLite-Testdatenbank  
 
@@ -78,4 +78,3 @@ Integration Tests prüfen das Zusammenspiel von API, Datenbank und Dateisystem.
 
 **Expected Result:**
 - Der CSV-Import legt Mineralien mit Nummer, Name, Fundort, Region, Land, Fundjahr, Erwerbsjahr und Bildreferenzen an.
-
