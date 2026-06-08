@@ -38,11 +38,13 @@ Aktuell vorhanden:
 - [Testmatrix](docs/test_matrix.md)
 - [Testfälle](docs/test_cases/README.md)
 - Unit Tests mit xUnit
+- Integrationstests mit xUnit und Testdatenbank
+- Playwright E2E Smoke-Test
 - GitHub Actions Pipeline für Build und Tests
 
 Die Testmatrix verknüpft Requirements mit Testfällen, Testlevel, Automatisierung und Status. Dadurch wird sichtbar, welche Anforderungen bereits abgedeckt sind, welche Tests noch offen sind und wo Tests bewusst Soll/Ist-Abweichungen dokumentieren.
 
-Geplante Testlevel:
+Verwendete Testlevel:
 
 - **Unit Tests:** Domain-Validierung, Such- und Sortierlogik, ViewModel-Verhalten
 - **Integration Tests:** API, SQLite-Testdatenbank, Bilddateien, CSV-Import
@@ -72,12 +74,12 @@ Hinweis: Einige Unit Tests sind aktuell bewusst rot, weil sie gewünschtes Soll-
 
 - xUnit
 - Test Doubles für HTTP, JS Interop und Datei-Uploads
-- Playwright geplant
+- Playwright E2E Smoke-Test
 
 **CI/CD**
 
 - GitHub Actions
-- Restore, Build und Testausführung
+- Restore, Build, Unit Tests, Integrationstests und E2E Smoke-Test
 
 ---
 
@@ -91,6 +93,8 @@ src/
 
 tests/
   MineralCollection.Tests.Unit  Unit Tests
+  MineralCollection.Tests.Integration  Integration Tests
+  MineralCollection.Tests.E2E   Playwright E2E Tests
 
 docs/
   requirements.md               Anforderungen
@@ -166,6 +170,19 @@ Einzelnen Test Case testen:
 dotnet test --filter "TestCase=UTC-SORT-003"
 ```
 
+E2E gegen eine laufende lokale App starten:
+
+```bash
+dotnet test tests/MineralCollection.Tests.E2E/MineralCollection.Tests.E2E.csproj --filter "TestLevel=E2E"
+```
+
+Falls das Frontend nicht unter `http://localhost:5119` läuft, kann die URL überschrieben werden:
+
+```bash
+$env:MINERALVAULT_E2E_BASE_URL="http://localhost:5119"
+dotnet test tests/MineralCollection.Tests.E2E/MineralCollection.Tests.E2E.csproj --filter "TestLevel=E2E"
+```
+
 ---
 
 ## Roadmap
@@ -178,14 +195,13 @@ dotnet test --filter "TestCase=UTC-SORT-003"
 - [x] Requirements und Teststrategie
 - [x] Testmatrix und neue Testcase-Struktur
 - [x] erste neue Unit Tests mit Traceability-Traits
+- [x] Integrationstestprojekt mit API/DB/Bilddatei-Tests
+- [x] Playwright E2E-Testprojekt
+- [x] CI Pipeline um Integration und E2E erweitert
 - [ ] bekannte Soll/Ist-Abweichungen beheben
-- [ ] Integrationstestprojekt aufbauen
-- [ ] Playwright E2E Tests einführen
-- [ ] CI Pipeline um Integration und E2E erweitern
 
 ---
 
 ## Ziel des Projekts
 
-MineralVault soll zeigen, wie eine fachliche Anwendung schrittweise entwickelt und gleichzeitig testbar aufgebaut werden kann. Der Fokus liegt auf sauberer Struktur, nachvollziehbaren Anforderungen, automatisierbaren Tests und transparenter Weiterentwicklung.
-
+Das Projekt soll zeigen, wie eine fachliche Anwendung schrittweise entwickelt und gleichzeitig testbar aufgebaut werden kann. Der Fokus liegt auf sauberer Struktur, nachvollziehbaren Anforderungen, automatisierbaren Tests und transparenter Weiterentwicklung.

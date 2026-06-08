@@ -106,7 +106,7 @@ Die Pipeline soll langfristig in drei Phasen laufen:
 2. Integration Tests mit isolierter Testdatenbank
 3. Playwright E2E Tests mit gestarteter API und Frontend-App
 
-Die aktuelle Pipeline deckt Build und Unit Tests ab. Integration und E2E werden schrittweise erganzt.
+Die aktuelle Pipeline deckt Build, Unit Tests, Integrationstests und einen Playwright E2E Smoke-Test ab. Weitere E2E Tests werden schrittweise ergänzt.
 
 ## Testdaten
 
@@ -120,6 +120,5 @@ Beispiele:
 - Mineral ohne Bild
 - neues Mineral mit `Id = 0`
 - Mineralnummern `1`, `2`, `10` fur numerische Sortierung
-
 
 

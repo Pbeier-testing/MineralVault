@@ -4,10 +4,14 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 
 ## E2E-NAV-001 - Anwendung startet in der Kartenansicht
 
-**Related Requirements:** R1.1, R1.2, R2.1, R3.1  
-**Status:** Draft  
+**Related Requirements:** R1.1, R1.2  
+**Status:** Automated  
 **Test Level:** E2E  
 **Automation:** Playwright  
+
+**Execution:**
+- Der Test verwendet standardmäßig `http://localhost:5119`.
+- Falls die Anwendung auf einer anderen URL läuft, kann `MINERALVAULT_E2E_BASE_URL` gesetzt werden.
 
 **Expected Result:**
 - Die Kartenansicht ist sichtbar.
@@ -111,4 +115,3 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 
 **Expected Result:**
 - Nach Bestätigung verschwindet das Mineral aus der UI.
-

@@ -11,8 +11,8 @@ Statuswerte:
 
 | Requirement | Test Case IDs | Test Level | Automation | Status | Notes |
 |---|---|---|---|---|---|
-| R1.1 Zwei Hauptansichten | E2E-NAV-001 | E2E | Playwright | Open | Karten- und Tabellenansicht sichtbar |
-| R1.2 Standardansicht beim Start | E2E-NAV-001 | E2E | Playwright | Open | App startet in Kartenansicht |
+| R1.1 Zwei Hauptansichten | E2E-NAV-001 | E2E | Playwright | Covered | E2E Smoke-Test lokal erfolgreich und in CI eingebunden |
+| R1.2 Standardansicht beim Start | E2E-NAV-001 | E2E | Playwright | Covered | E2E Smoke-Test lokal erfolgreich und in CI eingebunden |
 | R1.3 Wechsel zwischen Ansichten | E2E-NAV-002 | E2E | Playwright | Open | Navigation zwischen Ansichten |
 | R2.1 Mineralien als Marker anzeigen | E2E-NAV-001 | E2E | Playwright | Open | Marker für Mineralien mit Koordinaten |
 | R2.2 Marker-Clustering | MTC-MAP-001 | Manual | Manual | Manual | Visuelle Kartenfunktion |

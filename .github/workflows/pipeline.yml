@@ -30,3 +30,25 @@ jobs:
 
       - name: Run Integration Tests
         run: dotnet test tests/MineralCollection.Tests.Integration/MineralCollection.Tests.Integration.csproj --no-build --verbosity normal --filter "TestLevel=Integration"
+
+      - name: Install Playwright Browsers
+        run: pwsh tests/MineralCollection.Tests.E2E/bin/Debug/net10.0/playwright.ps1 install --with-deps chromium
+
+      - name: Run E2E Smoke Tests
+        env:
+          MINERALVAULT_E2E_BASE_URL: http://localhost:5119
+        run: |
+          dotnet run --project src/MineralCollection.API/MineralCollection.API.csproj --no-build --urls http://localhost:5247 > api-e2e.log 2>&1 &
+          dotnet run --project src/MineralCollection.Frontend/MineralCollection.Frontend.csproj --no-build --urls http://localhost:5119 > frontend-e2e.log 2>&1 &
+
+          for i in {1..60}; do
+            if curl --fail --silent http://localhost:5247/api/minerals > /dev/null && curl --fail --silent http://localhost:5119 > /dev/null; then
+              break
+            fi
+            sleep 2
+          done
+
+          curl --fail http://localhost:5247/api/minerals || (cat api-e2e.log && exit 1)
+          curl --fail http://localhost:5119 || (cat frontend-e2e.log && exit 1)
+
+          dotnet test tests/MineralCollection.Tests.E2E/MineralCollection.Tests.E2E.csproj --no-build --verbosity normal --filter "TestLevel=E2E"

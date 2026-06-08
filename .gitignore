@@ -128,6 +128,10 @@ ipch/
 
 # Visual Studio Trace Files
 *.e2e
+!tests/MineralCollection.Tests.E2E/
+!tests/MineralCollection.Tests.E2E/**
+tests/MineralCollection.Tests.E2E/[Bb]in/
+tests/MineralCollection.Tests.E2E/[Oo]bj/
 
 # TFS 2012 Local Workspace
 $tf/
@@ -275,6 +279,8 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 *.db
+*.db-shm
+*.db-wal
 
 # Business Intelligence projects
 *.rdl.data
