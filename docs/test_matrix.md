@@ -25,16 +25,16 @@ Statuswerte:
 | R3.3 Kachel-Inhalte | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R3.4 Anzahl anzeigen | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R3.5 Sortierung Standardwert | UTC-SORT-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Test für Standardsortierung vorhanden |
-| R4.1 Suchfeld in Kartenansicht | E2E-SEARCH-001 | E2E | Playwright | Open | Suchfeld sichtbar |
+| R4.1 Suchfeld in Kartenansicht | E2E-SEARCH-001 | E2E | Playwright | Covered | Suchfeld wird im E2E-Suchtest verwendet |
 | R4.2 Suchfeld in Tabellenansicht | Open | E2E | Playwright | Open | Testfall noch formulieren |
-| R4.3 Suchfeld in der Kartenansicht | UTC-SEARCH-001, UTC-SEARCH-002, E2E-SEARCH-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests für Mineralname und Fundort vorhanden; E2E offen |
+| R4.3 Suchfeld in der Kartenansicht | UTC-SEARCH-001, UTC-SEARCH-002, E2E-SEARCH-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests und E2E-Test für Mineralname vorhanden |
 | R4.4 Suchfeld in der Tabellenansicht | UTC-SEARCH-004, UTC-SEARCH-005 | Unit/E2E | xUnit, Playwright | Failing | Land wird aktuell nicht durchsucht |
 | R4.5 Teiltreffer | UTC-SEARCH-001, UTC-SEARCH-002 | Unit | xUnit | Covered | Unit-Tests vorhanden |
 | R4.6 Gross-/Kleinschreibung | UTC-SEARCH-003 | Unit | xUnit | Covered | Unit-Test vorhanden |
 | R4.7 Suchergebnisse in Kartenansicht | E2E-SEARCH-001 | E2E | Playwright | Open | Karte zeigt nur gefilterte Marker |
-| R4.8 Suchergebnisse in Kartenansicht | E2E-SEARCH-001 | E2E | Playwright | Open | Requirement beschreibt faktisch die Explorer-Liste |
+| R4.8 Suchergebnisse in Kartenansicht | E2E-SEARCH-001 | E2E | Playwright | Covered | Explorer-Liste zeigt im E2E-Test nur Suchtreffer |
 | R4.9 Suchergebnisse in Tabellenansicht | Open | Unit/E2E | xUnit, Playwright | Open | Testfall noch formulieren |
-| R4.10 Aktualisierte Anzahl | E2E-SEARCH-001 | E2E | Playwright | Open | UI-Anzahl nach Suche |
+| R4.10 Aktualisierte Anzahl | E2E-SEARCH-001 | E2E | Playwright | Covered | UI-Anzahl wird nach Suche und nach Leeren der Suche geprüft |
 | R4.11 Sortieroptionen Kartenansicht | UTC-SORT-001, UTC-SORT-002, UTC-SORT-003 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests für Name, Region und Nummer vorhanden; E2E offen |
 | R4.12 Sortieroptionen Tabellenansicht | Open | Unit/E2E | xUnit, Playwright | Open | Testfall noch formulieren |
 | R4.13 Numerische Nummernsortierung | UTC-SORT-003 | Unit | xUnit | Covered | `2` vor `10` |

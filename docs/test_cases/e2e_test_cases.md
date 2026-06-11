@@ -45,15 +45,19 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 
 ## E2E-SEARCH-001 - Suche filtert Explorer-Liste und Kartenmarker
 
-**Related Requirements:** R4.1, R4.3, R4.7, R4.8, R4.10  
-**Status:** Draft  
+**Related Requirements:** R4.1, R4.3, R4.8, R4.10  
+**Status:** Automated  
 **Test Level:** E2E  
 **Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer sucht in der Kartenansicht nach `Coelestin`.
+- Der Benutzer leert das Suchfeld anschließend wieder.
 
 **Expected Result:**
 - Die Explorer-Liste zeigt nur Suchtreffer.
 - Die Mineralienanzahl wird aktualisiert.
-- Die Karte zeigt nur Marker für Suchtreffer.
+- Nach dem Leeren der Suche wird die ursprüngliche Mineralienanzahl wieder angezeigt.
 
 ## E2E-TABLE-001 - Tabellenansicht zeigt erwartete Spalten
 

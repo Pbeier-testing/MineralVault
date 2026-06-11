@@ -1,4 +1,5 @@
 using Microsoft.Playwright;
+using MineralCollection.Tests.E2E.Infrastructure;
 
 namespace MineralCollection.Tests.E2E.Navigation;
 
@@ -12,10 +13,10 @@ public class StartupSmokeTests
     public async Task HomePage_WhenApplicationStarts_ShowsMapView()
     {
         using var playwright = await Playwright.CreateAsync();
-        await using var browser = await LaunchBrowserAsync(playwright);
+        await using var browser = await E2ETestContext.LaunchBrowserAsync(playwright);
         var page = await browser.NewPageAsync();
 
-        await page.GotoAsync(GetBaseUrl());
+        await page.GotoAsync(E2ETestContext.BaseUrl);
         var mapView = await page.WaitForSelectorAsync("[data-testid='map-view']", new PageWaitForSelectorOptions
         {
             Timeout = 10000
@@ -34,10 +35,10 @@ public class StartupSmokeTests
     public async Task Navigation_WhenTableAndMapButtonsAreClicked_SwitchesBetweenViews()
     {
         using var playwright = await Playwright.CreateAsync();
-        await using var browser = await LaunchBrowserAsync(playwright);
+        await using var browser = await E2ETestContext.LaunchBrowserAsync(playwright);
         var page = await browser.NewPageAsync();
 
-        await page.GotoAsync(GetBaseUrl());
+        await page.GotoAsync(E2ETestContext.BaseUrl);
         await page.WaitForSelectorAsync("[data-testid='map-view']");
 
         await page.ClickAsync("[data-testid='nav-table-view']");
@@ -55,19 +56,5 @@ public class StartupSmokeTests
         });
 
         Assert.NotNull(mapView);
-    }
-
-    private static string GetBaseUrl()
-    {
-        return Environment.GetEnvironmentVariable("MINERALVAULT_E2E_BASE_URL")
-            ?? "http://localhost:5119";
-    }
-
-    private static Task<IBrowser> LaunchBrowserAsync(IPlaywright playwright)
-    {
-        return playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-        {
-            Headless = true
-        });
     }
 }
