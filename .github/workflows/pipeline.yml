@@ -37,6 +37,7 @@ jobs:
       - name: Run E2E Smoke Tests
         env:
           MINERALVAULT_E2E_BASE_URL: http://localhost:5119
+          MINERALVAULT_DB_PATH: ${{ github.workspace }}/tests/MineralCollection.Tests.E2E/TestData/minerals.e2e.db
         run: |
           dotnet run --project src/MineralCollection.API/MineralCollection.API.csproj --no-build --urls http://localhost:5247 > api-e2e.log 2>&1 &
           dotnet run --project src/MineralCollection.Frontend/MineralCollection.Frontend.csproj --no-build --urls http://localhost:5119 > frontend-e2e.log 2>&1 &

@@ -281,6 +281,8 @@ ServiceFabricBackup/
 *.db
 *.db-shm
 *.db-wal
+!tests/MineralCollection.Tests.E2E/TestData/
+!tests/MineralCollection.Tests.E2E/TestData/*.db
 
 # Business Intelligence projects
 *.rdl.data

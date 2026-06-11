@@ -6,9 +6,10 @@ Der Smoke-Test wird lokal gegen eine laufende Anwendung ausgeführt und ist in d
 
 ## Voraussetzungen
 
-1. API starten:
+1. API mit E2E-Testdatenbank starten:
 
    ```bash
+   $env:MINERALVAULT_DB_PATH="tests/MineralCollection.Tests.E2E/TestData/minerals.e2e.db"
    dotnet run --project src/MineralCollection.API
    ```
 

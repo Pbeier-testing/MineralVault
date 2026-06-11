@@ -142,6 +142,13 @@ dotnet run --project src/MineralCollection.Frontend
 
 Das Frontend ist aktuell auf die API-Adresse `http://localhost:5247` ausgelegt.
 
+Für reproduzierbare E2E-Tests kann die API mit einer separaten Testdatenbank gestartet werden:
+
+```bash
+$env:MINERALVAULT_DB_PATH="tests/MineralCollection.Tests.E2E/TestData/minerals.e2e.db"
+dotnet run --project src/MineralCollection.API
+```
+
 ---
 
 ## Tests ausführen

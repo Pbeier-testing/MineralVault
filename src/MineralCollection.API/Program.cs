@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using MineralCollection.API.Data;
 using Microsoft.OpenApi;
 
@@ -15,7 +16,15 @@ builder.Services.AddSwaggerGen();
 // SQLite Datenbank-Anbindung
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlite("Data Source=minerals.db");
+    var databasePath = builder.Configuration["MINERALVAULT_DB_PATH"]
+        ?? builder.Configuration["Database:Path"]
+        ?? "minerals.db";
+    var connectionString = new SqliteConnectionStringBuilder
+    {
+        DataSource = databasePath
+    }.ToString();
+
+    options.UseSqlite(connectionString);
     // Aktiviert die echten Werte in der Konsolenausgabe, hilfreich fürs schnelle Debuggen von SQL-Fehlern, 
     // da die tatsächlichen Werte in den Fehlermeldungen angezeigt werden.
     options.EnableSensitiveDataLogging();
