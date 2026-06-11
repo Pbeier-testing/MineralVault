@@ -11,29 +11,63 @@ public class StartupSmokeTests
     [Trait("Requirement", "R1.2")]
     public async Task HomePage_WhenApplicationStarts_ShowsMapView()
     {
-        var baseUrl = Environment.GetEnvironmentVariable("MINERALVAULT_E2E_BASE_URL")
-            ?? "http://localhost:5119";
-
         using var playwright = await Playwright.CreateAsync();
-        await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-        {
-            Headless = true
-        });
+        await using var browser = await LaunchBrowserAsync(playwright);
         var page = await browser.NewPageAsync();
 
-        await page.GotoAsync(baseUrl);
-        var map = await page.WaitForSelectorAsync("#map", new PageWaitForSelectorOptions
+        await page.GotoAsync(GetBaseUrl());
+        var mapView = await page.WaitForSelectorAsync("[data-testid='map-view']", new PageWaitForSelectorOptions
+        {
+            Timeout = 10000
+        });
+        var mineralCount = await page.WaitForSelectorAsync("[data-testid='mineral-count']");
+
+        Assert.NotNull(mapView);
+        Assert.NotNull(mineralCount);
+    }
+
+    [Fact]
+    [Trait("TestLevel", "E2E")]
+    [Trait("TestCase", "E2E-NAV-002")]
+    [Trait("Requirement", "R1.3")]
+    [Trait("Requirement", "R5.1")]
+    public async Task Navigation_WhenTableAndMapButtonsAreClicked_SwitchesBetweenViews()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await LaunchBrowserAsync(playwright);
+        var page = await browser.NewPageAsync();
+
+        await page.GotoAsync(GetBaseUrl());
+        await page.WaitForSelectorAsync("[data-testid='map-view']");
+
+        await page.ClickAsync("[data-testid='nav-table-view']");
+        var tableView = await page.WaitForSelectorAsync("[data-testid='table-view']", new PageWaitForSelectorOptions
         {
             Timeout = 10000
         });
 
-        Assert.NotNull(map);
-        await AssertContainsTextAsync(page, "Funde");
+        Assert.NotNull(tableView);
+
+        await page.ClickAsync("[data-testid='nav-map-view']");
+        var mapView = await page.WaitForSelectorAsync("[data-testid='map-view']", new PageWaitForSelectorOptions
+        {
+            Timeout = 10000
+        });
+
+        Assert.NotNull(mapView);
     }
 
-    private static async Task AssertContainsTextAsync(IPage page, string text)
+    private static string GetBaseUrl()
     {
-        var content = await page.ContentAsync();
-        Assert.Contains(text, content);
+        return Environment.GetEnvironmentVariable("MINERALVAULT_E2E_BASE_URL")
+            ?? "http://localhost:5119";
+    }
+
+    private static Task<IBrowser> LaunchBrowserAsync(IPlaywright playwright)
+    {
+        return playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+        {
+            Headless = true
+        });
     }
 }

@@ -20,9 +20,13 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 ## E2E-NAV-002 - Wechsel zwischen Kartenansicht und Tabellenansicht
 
 **Related Requirements:** R1.3, R5.1  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** E2E  
 **Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer wechselt ueber die Navigation von der Kartenansicht in die Tabellenansicht.
+- Der Benutzer wechselt anschliessend zurueck in die Kartenansicht.
 
 **Expected Result:**
 - Der Benutzer kann zur Tabellenansicht wechseln.

@@ -13,7 +13,7 @@ Statuswerte:
 |---|---|---|---|---|---|
 | R1.1 Zwei Hauptansichten | E2E-NAV-001 | E2E | Playwright | Covered | E2E Smoke-Test lokal erfolgreich und in CI eingebunden |
 | R1.2 Standardansicht beim Start | E2E-NAV-001 | E2E | Playwright | Covered | E2E Smoke-Test lokal erfolgreich und in CI eingebunden |
-| R1.3 Wechsel zwischen Ansichten | E2E-NAV-002 | E2E | Playwright | Open | Navigation zwischen Ansichten |
+| R1.3 Wechsel zwischen Ansichten | E2E-NAV-002 | E2E | Playwright | Covered | Navigation zwischen Karten- und Tabellenansicht getestet |
 | R2.1 Mineralien als Marker anzeigen | E2E-NAV-001 | E2E | Playwright | Open | Marker für Mineralien mit Koordinaten |
 | R2.2 Marker-Clustering | MTC-MAP-001 | Manual | Manual | Manual | Visuelle Kartenfunktion |
 | R2.3 Cluster-Auflösung | MTC-MAP-001 | Manual | Manual | Manual | Zoom-Verhalten |
@@ -38,7 +38,7 @@ Statuswerte:
 | R4.11 Sortieroptionen Kartenansicht | UTC-SORT-001, UTC-SORT-002, UTC-SORT-003 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests für Name, Region und Nummer vorhanden; E2E offen |
 | R4.12 Sortieroptionen Tabellenansicht | Open | Unit/E2E | xUnit, Playwright | Open | Testfall noch formulieren |
 | R4.13 Numerische Nummernsortierung | UTC-SORT-003 | Unit | xUnit | Covered | `2` vor `10` |
-| R5.1 Tabellenansicht anzeigen | E2E-NAV-002, E2E-TABLE-001 | E2E | Playwright | Open | Tabelle sichtbar |
+| R5.1 Tabellenansicht anzeigen | E2E-NAV-002, E2E-TABLE-001 | E2E | Playwright | Covered | Tabellenansicht wird im Navigationstest sichtbar |
 | R5.2 Tabellenspalten | E2E-TABLE-001, ITC-CSV-001 | E2E/Integration | Playwright, xUnit | Open | Erwartete Spalten und CSV-Felder |
 | R5.3 Inline-Bearbeitung | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R5.4 Jahresfelder bearbeiten | Open | E2E | Playwright | Open | Testfall noch formulieren |

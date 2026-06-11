@@ -7,20 +7,22 @@
         
         @* Kartenmodus Button *@
         <button class="btn @(activeTab == "explorer" ? "btn-primary" : "btn-dark") mb-3 shadow-none"
+                data-testid="nav-map-view"
                 @onclick='() => SetTab("explorer")'>
             <i class="bi bi-map fs-4"></i>
         </button>
         
         @* Tabelle Button *@
         <button class="btn @(activeTab == "admin" ? "btn-primary" : "btn-dark") mb-3 shadow-none"
+                data-testid="nav-table-view"
                 @onclick='() => SetTab("admin")'>
             <i class="bi bi-table fs-4"></i>
         </button>
         
-        <button class="btn btn-dark mb-3"><i class="bi bi-plus-circle fs-4"></i></button>
+        <button class="btn btn-dark mb-3" data-testid="nav-add"><i class="bi bi-plus-circle fs-4"></i></button>
         
         <div class="mt-auto">
-            <button class="btn btn-dark"><i class="bi bi-gear fs-4"></i></button>
+            <button class="btn btn-dark" data-testid="nav-settings"><i class="bi bi-gear fs-4"></i></button>
         </div>
     </div>
 
