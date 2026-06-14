@@ -39,7 +39,7 @@ Statuswerte:
 | R4.12 Sortieroptionen Tabellenansicht | Open | Unit/E2E | xUnit, Playwright | Open | Testfall noch formulieren |
 | R4.13 Numerische Nummernsortierung | UTC-SORT-003 | Unit | xUnit | Covered | `2` vor `10` |
 | R5.1 Tabellenansicht anzeigen | E2E-NAV-002, E2E-TABLE-001 | E2E | Playwright | Covered | Tabellenansicht wird im Navigationstest sichtbar |
-| R5.2 Tabellenspalten | E2E-TABLE-001, ITC-CSV-001 | E2E/Integration | Playwright, xUnit | Open | Erwartete Spalten und CSV-Felder |
+| R5.2 Tabellenspalten | E2E-TABLE-001, ITC-CSV-001 | E2E/Integration | Playwright, xUnit | Covered | Erwartete Tabellenspalten werden im E2E-Test geprüft; CSV-Felder bleiben als Integrationstest offen |
 | R5.3 Inline-Bearbeitung | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R5.4 Jahresfelder bearbeiten | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R5.5 Jahresfelder per Stepper bearbeiten | Open | E2E/Manual | Playwright optional | Open | Testfall noch formulieren |

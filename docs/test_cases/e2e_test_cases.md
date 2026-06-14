@@ -62,9 +62,12 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 ## E2E-TABLE-001 - Tabellenansicht zeigt erwartete Spalten
 
 **Related Requirements:** R5.1, R5.2  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** E2E  
 **Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer wechselt in die Tabellenansicht.
 
 **Expected Result:**
 - Alle erwarteten Tabellenspalten sind sichtbar.
