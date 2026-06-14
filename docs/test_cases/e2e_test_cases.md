@@ -75,9 +75,13 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 ## E2E-CREATE-001 - Neues Mineral wird in der Tabelle angelegt
 
 **Related Requirements:** R6.1, R6.2, R6.3, R6.4  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** E2E  
 **Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer wechselt in die Tabellenansicht.
+- Der Benutzer klickt auf `Neu hinzufügen`.
 
 **Expected Result:**
 - Nach Klick auf `Neu hinzufügen` erscheint eine neue Zeile oben.

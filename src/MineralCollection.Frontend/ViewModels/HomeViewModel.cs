@@ -96,7 +96,7 @@ namespace MineralCollection.Frontend.ViewModels
 
             var newMineral = new Mineral
             {
-                Name = "NEUES MINERAL",
+                Name = "Neues Mineral",
                 Nummer = "0",
                 Images = new List<MineralImage>() 
             };

@@ -156,7 +156,7 @@ public class HomeViewModelTests
         var newMineral = viewModel.Minerals[0];
         Assert.Equal(4, viewModel.Minerals.Count);
         Assert.Equal(0, newMineral.Id);
-        Assert.Equal("NEUES MINERAL", newMineral.Name);
+        Assert.Equal("Neues Mineral", newMineral.Name);
         Assert.Equal("0", newMineral.Nummer);
         Assert.Empty(newMineral.Images);
         Assert.Equal("", viewModel.SearchTerm);

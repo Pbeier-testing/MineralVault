@@ -46,4 +46,44 @@ public class TableTests
             Assert.Contains(expectedHeader, normalizedHeaders);
         }
     }
+
+    [Fact]
+    [Trait("TestLevel", "E2E")]
+    [Trait("TestCase", "E2E-CREATE-001")]
+    [Trait("Requirement", "R6.1")]
+    [Trait("Requirement", "R6.2")]
+    [Trait("Requirement", "R6.3")]
+    [Trait("Requirement", "R6.4")]
+    public async Task TableView_WhenNewMineralIsAdded_ShowsNewHighlightedRowAtTop()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await E2ETestContext.LaunchBrowserAsync(playwright);
+        var page = await browser.NewPageAsync();
+
+        await page.GotoAsync(E2ETestContext.BaseUrl);
+        await page.WaitForSelectorAsync("[data-testid='map-view']");
+
+        await page.ClickAsync("[data-testid='nav-table-view']");
+        await page.WaitForSelectorAsync("[data-testid='minerals-table']");
+
+        var rows = page.Locator("[data-testid='mineral-table-row']");
+        var initialRowCount = await rows.CountAsync();
+
+        await page.ClickAsync("[data-testid='add-mineral-button']");
+
+        await page.WaitForFunctionAsync(
+            @"expectedCount => document.querySelectorAll('[data-testid=""mineral-table-row""]').length === expectedCount",
+            initialRowCount + 1);
+
+        var firstRow = rows.First;
+        var firstRowMineralId = await firstRow.GetAttributeAsync("data-mineral-id");
+        var firstRowClass = await firstRow.GetAttributeAsync("class");
+        var numberValue = await firstRow.Locator("[data-testid='mineral-number-input']").InputValueAsync();
+        var nameValue = await firstRow.Locator("[data-testid='mineral-name-input']").InputValueAsync();
+
+        Assert.Equal("0", firstRowMineralId);
+        Assert.Contains("table-row-new", firstRowClass);
+        Assert.Equal("0", numberValue);
+        Assert.Equal("Neues Mineral", nameValue);
+    }
 }

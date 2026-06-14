@@ -43,10 +43,10 @@ Statuswerte:
 | R5.3 Inline-Bearbeitung | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R5.4 Jahresfelder bearbeiten | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R5.5 Jahresfelder per Stepper bearbeiten | Open | E2E/Manual | Playwright optional | Open | Testfall noch formulieren |
-| R6.1 Neues Mineral hinzufügen | UTC-CREATE-001, UTC-CREATE-003, E2E-CREATE-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests vorhanden |
-| R6.2 Neue Zeile oben einfügen | UTC-CREATE-001, E2E-CREATE-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Test vorhanden |
-| R6.3 Standardwerte für neues Mineral | UTC-CREATE-002, E2E-CREATE-001 | Unit/E2E | xUnit, Playwright | Covered | Name und Nummer getestet; Platzhalterbild UI offen |
-| R6.4 Neue Zeile hervorheben | E2E-CREATE-001 | E2E/Manual | Playwright optional | Open | Visuelle Hervorhebung |
+| R6.1 Neues Mineral hinzufügen | UTC-CREATE-001, UTC-CREATE-003, E2E-CREATE-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests und E2E-Workflow vorhanden |
+| R6.2 Neue Zeile oben einfügen | UTC-CREATE-001, E2E-CREATE-001 | Unit/E2E | xUnit, Playwright | Covered | Position der neuen Zeile wird im E2E-Test geprüft |
+| R6.3 Standardwerte für neues Mineral | UTC-CREATE-002, E2E-CREATE-001 | Unit/E2E | xUnit, Playwright | Covered | Name und Nummer werden im E2E-Test geprüft; Platzhalterbild UI offen |
+| R6.4 Neue Zeile hervorheben | E2E-CREATE-001 | E2E/Manual | Playwright | Covered | Hervorhebung wird über CSS-Klasse im E2E-Test geprüft |
 | R7.1 Thumbnail anzeigen | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R7.2 Platzhalterbild anzeigen | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R7.3 Bild ändern | Open | E2E | Playwright | Open | Testfall noch formulieren |
