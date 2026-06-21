@@ -2,6 +2,8 @@
 
 Diese Testcase-Sammlung basiert auf den aktuellen Requirements und der `docs/test_matrix.md`.
 
+Ergänzende Testentwurfsdokumente liegen unter `docs/test_design/`.
+
 ## Struktur
 
 - `unit_test_cases.md`: schnelle Tests für Domain- und ViewModel-Logik
@@ -22,4 +24,3 @@ Diese Testcase-Sammlung basiert auf den aktuellen Requirements und der `docs/tes
 - Integration: `ITC-<Bereich>-<Nummer>`
 - E2E: `E2E-<Bereich>-<Nummer>`
 - Manual: `MTC-<Bereich>-<Nummer>`
-

@@ -93,6 +93,10 @@ Die Priorisierung richtet sich nach Risiko und Nutzen:
 6. Bildverwaltung
 7. UI-Darstellung und Bedienbarkeit
 
+## Testentwurfstechniken
+
+Ausgewählte Eingabefelder werden mit Testentwurfstechniken analysiert. Die Äquivalenzklassenanalyse für Koordinaten und Jahresfelder liegt unter `docs/test_design/equivalence_classes.md`.
+
 ## Automatisierungsstrategie
 
 - Unit Tests und Integrationstests laufen bei jedem lokalen Testlauf und in jeder CI-Ausführung.
@@ -120,5 +124,4 @@ Beispiele:
 - Mineral ohne Bild
 - neues Mineral mit `Id = 0`
 - Mineralnummern `1`, `2`, `10` fur numerische Sortierung
-
 

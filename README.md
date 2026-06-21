@@ -37,6 +37,7 @@ Aktuell vorhanden:
 - [Teststrategie](docs/test_strategy.md)
 - [Testmatrix](docs/test_matrix.md)
 - [Testfälle](docs/test_cases/README.md)
+- [Testentwurf](docs/test_design/equivalence_classes.md)
 - Unit Tests mit xUnit
 - Integrationstests mit xUnit und Testdatenbank
 - Playwright E2E Smoke-Test
