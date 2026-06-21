@@ -90,21 +90,30 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 
 ## E2E-COORD-001 - Koordinaten-Popup abbrechen
 
-**Related Requirements:** R8.2, R8.3, R8.5  
-**Status:** Draft  
+**Related Requirements:** R8.2, R8.5  
+**Status:** Automated  
 **Test Level:** E2E  
 **Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer öffnet das Koordinaten-Popup in der Tabellenansicht.
+- Der Benutzer bricht das Popup ohne neue Kartenauswahl ab.
 
 **Expected Result:**
 - Das Popup kann geöffnet werden.
-- Nach Auswahl und Klick auf `Abbrechen` bleiben die ursprünglichen Koordinaten erhalten.
+- Nach Klick auf `Abbrechen` bleiben die ursprünglichen Koordinaten erhalten.
 
 ## E2E-COORD-002 - Koordinaten-Popup übernehmen
 
-**Related Requirements:** R8.2, R8.3, R8.4, R8.6  
-**Status:** Draft  
+**Related Requirements:** R8.2, R8.4, R8.6  
+**Status:** Automated  
 **Test Level:** E2E  
 **Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer öffnet das Koordinaten-Popup in der Tabellenansicht.
+- Der Benutzer wählt Koordinaten über die Karte aus.
+- Der Benutzer übernimmt die ausgewählten Koordinaten.
 
 **Expected Result:**
 - Ausgewählte Koordinaten werden im Popup angezeigt.
