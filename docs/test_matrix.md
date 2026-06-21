@@ -62,8 +62,8 @@ Statuswerte:
 | R9.2 Neue Mineralien speichern | UTC-SAVE-001, ITC-API-001 | Unit/Integration | xUnit | Covered | POST im ViewModel und API-Persistenz getestet |
 | R9.3 Geänderte Mineralien speichern | UTC-SAVE-002, ITC-API-002 | Unit/Integration | xUnit | Covered | PUT im ViewModel und API-Persistenz getestet |
 | R9.4 Mineral löschen | UTC-DELETE-002, UTC-DELETE-003, E2E-DELETE-001, E2E-DELETE-002 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests fürs Löschen vorhanden; E2E offen |
-| R9.5 Löschbestätigung | E2E-DELETE-001, E2E-DELETE-002 | E2E | Playwright | Open | Dialog erscheint |
-| R9.6 Löschung abbrechen | UTC-DELETE-001, E2E-DELETE-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Test vorhanden; E2E offen |
+| R9.5 Löschbestätigung | E2E-DELETE-001, E2E-DELETE-002 | E2E | Playwright | Covered | Bestätigungsdialog wird im E2E-Test geprüft |
+| R9.6 Löschung abbrechen | UTC-DELETE-001, E2E-DELETE-001 | Unit/E2E | xUnit, Playwright | Covered | Abbruch erhält die Tabellenzeile im E2E-Test |
 | R9.7 Löschung bestätigen | UTC-DELETE-002, UTC-DELETE-003, E2E-DELETE-002 | Unit/E2E | xUnit, Playwright | Covered | Unit-Test für UI-Entfernung vorhanden; E2E offen |
 | R9.8 Gespeichertes Mineral aus Datenbank löschen | UTC-DELETE-002, ITC-API-003 | Unit/Integration | xUnit | Covered | DELETE im ViewModel und API-Persistenz getestet |
 | R9.9 Bildverweis beim Löschen entfernen | ITC-IMG-002 | Integration | xUnit | Covered | Bildverweis-Löschung beim Mineral-Delete getestet |

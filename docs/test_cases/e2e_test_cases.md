@@ -122,9 +122,13 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 ## E2E-DELETE-001 - Löschung abbrechen
 
 **Related Requirements:** R9.4, R9.5, R9.6  
-**Status:** Draft  
+**Status:** Automated  
 **Test Level:** E2E  
 **Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer klickt in der Tabellenansicht auf das Löschen-Symbol einer Mineralienzeile.
+- Der Benutzer bricht den Bestätigungsdialog ab.
 
 **Expected Result:**
 - Der Warnhinweis erscheint.
