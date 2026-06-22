@@ -76,7 +76,7 @@ public class HomeViewModelTests
         Assert.All(result, mineral => Assert.Equal("Sachsen", mineral.Region));
     }
 
-    /*[Fact]
+    [Fact]
     [Trait("TestLevel", "Unit")]
     [Trait("TestCase", "UTC-SEARCH-005")]
     [Trait("Requirement", "R4.4")]
@@ -90,7 +90,7 @@ public class HomeViewModelTests
 
         var result = viewModel.FilteredMinerals.ToList();
         Assert.Equal(3, result.Count);
-    }*/
+    }
 
     [Fact]
     [Trait("TestLevel", "Unit")]

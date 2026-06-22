@@ -28,7 +28,7 @@ Statuswerte:
 | R4.1 Suchfeld in Kartenansicht | E2E-SEARCH-001 | E2E | Playwright | Covered | Suchfeld wird im E2E-Suchtest verwendet |
 | R4.2 Suchfeld in Tabellenansicht | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R4.3 Suchfeld in der Kartenansicht | UTC-SEARCH-001, UTC-SEARCH-002, E2E-SEARCH-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests und E2E-Test für Mineralname vorhanden |
-| R4.4 Suchfeld in der Tabellenansicht | UTC-SEARCH-004, UTC-SEARCH-005 | Unit/E2E | xUnit, Playwright | Failing | Land wird aktuell nicht durchsucht |
+| R4.4 Suchfeld in der Tabellenansicht | UTC-SEARCH-004, UTC-SEARCH-005 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests für Region und Land vorhanden |
 | R4.5 Teiltreffer | UTC-SEARCH-001, UTC-SEARCH-002 | Unit | xUnit | Covered | Unit-Tests vorhanden |
 | R4.6 Gross-/Kleinschreibung | UTC-SEARCH-003 | Unit | xUnit | Covered | Unit-Test vorhanden |
 | R4.7 Suchergebnisse in Kartenansicht | E2E-SEARCH-001 | E2E | Playwright | Open | Karte zeigt nur gefilterte Marker |

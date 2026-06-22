@@ -52,7 +52,8 @@ namespace MineralCollection.Frontend.ViewModels
             .Where(m => string.IsNullOrWhiteSpace(SearchTerm) ||
                         m.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase) ||
                         (m.Region != null && m.Region.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)) ||
-                        (m.Fundort != null && m.Fundort.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
+                        (m.Fundort != null && m.Fundort.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                        (m.Land != null && m.Land.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
             .OrderByDescending(m => m.Id == 0)
             .ThenBy(m =>
             {
