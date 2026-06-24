@@ -224,11 +224,11 @@ else if (ActiveTab == "admin")
                 <div class="modal-footer bg-light">
                     <div class="me-auto">
                         <span class="badge bg-white text-dark border p-2" data-testid="coordinate-picker-value">
-                            Lat: @VM.ActiveMineral?.Breitengrad | Lon: @VM.ActiveMineral?.Laengengrad
+                            Lat: @VM.PendingBreitengrad | Lon: @VM.PendingLaengengrad
                         </span>
                     </div>
                     <button type="button" class="btn btn-secondary" data-testid="coordinate-picker-cancel-button" @onclick="VM.CloseCoordPicker">Abbrechen</button>
-                    <button type="button" class="btn btn-primary px-4" data-testid="coordinate-picker-apply-button" @onclick="VM.CloseCoordPicker">Übernehmen</button>
+                    <button type="button" class="btn btn-primary px-4" data-testid="coordinate-picker-apply-button" @onclick="VM.ApplySelectedCoordinates">Übernehmen</button>
                 </div>
             </div>
         </div>

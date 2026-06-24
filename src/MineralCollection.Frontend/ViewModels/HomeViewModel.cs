@@ -23,6 +23,8 @@ namespace MineralCollection.Frontend.ViewModels
         public string ActiveTab { get; set; } = "explorer";
         public bool ShowCoordPicker { get; set; }
         public Mineral? ActiveMineral { get; set; }
+        public double? PendingBreitengrad { get; set; }
+        public double? PendingLaengengrad { get; set; }
         public string? SelectedImageUrl { get; set; }
         public bool ShowImagePreview { get; set; }
 
@@ -153,6 +155,8 @@ namespace MineralCollection.Frontend.ViewModels
         public async Task OpenCoordPickerAsync(Mineral m)
         {
             ActiveMineral = m;
+            PendingBreitengrad = m.Breitengrad;
+            PendingLaengengrad = m.Laengengrad;
             ShowCoordPicker = true;
             NotifyStateChanged();
 
@@ -161,8 +165,8 @@ namespace MineralCollection.Frontend.ViewModels
             // Reicht sich selbst als JSInvokable-Referenz an JavaScript weiter!
             var dotNetObjRef = DotNetObjectReference.Create(this);
             
-            string startLat = ActiveMineral.Breitengrad?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "51.16";
-            string startLon = ActiveMineral.Laengengrad?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "10.45";
+            string startLat = PendingBreitengrad?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "51.16";
+            string startLon = PendingLaengengrad?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "10.45";
 
             await _js.InvokeVoidAsync("mapBox.initPicker", dotNetObjRef, startLat, startLon);
         }
@@ -170,19 +174,34 @@ namespace MineralCollection.Frontend.ViewModels
         [JSInvokable]
         public void UpdateActiveCoordinates(string lat, string lon)
         {
-            if (ActiveMineral != null)
-            {
-                if (double.TryParse(lat, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var dLat))
-                    ActiveMineral.Breitengrad = dLat;
-                
-                if (double.TryParse(lon, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var dLon))
-                    ActiveMineral.Laengengrad = dLon;
+            if (double.TryParse(lat, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var dLat))
+                PendingBreitengrad = dLat;
 
-                NotifyStateChanged();
-            }
+            if (double.TryParse(lon, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var dLon))
+                PendingLaengengrad = dLon;
+
+            NotifyStateChanged();
         }
 
-        public void CloseCoordPicker() => ShowCoordPicker = false;
+        public void ApplySelectedCoordinates()
+        {
+            if (ActiveMineral != null)
+            {
+                ActiveMineral.Breitengrad = PendingBreitengrad;
+                ActiveMineral.Laengengrad = PendingLaengengrad;
+            }
+
+            CloseCoordPicker();
+        }
+
+        public void CloseCoordPicker()
+        {
+            ShowCoordPicker = false;
+            ActiveMineral = null;
+            PendingBreitengrad = null;
+            PendingLaengengrad = null;
+            NotifyStateChanged();
+        }
 
         public void OpenImagePreview(string fileName)
         {

@@ -97,7 +97,8 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 
 **Execution:**
 - Der Benutzer öffnet das Koordinaten-Popup in der Tabellenansicht.
-- Der Benutzer bricht das Popup ohne neue Kartenauswahl ab.
+- Der Benutzer wählt neue Koordinaten über die Karte aus.
+- Der Benutzer bricht das Popup ab.
 
 **Expected Result:**
 - Das Popup kann geöffnet werden.

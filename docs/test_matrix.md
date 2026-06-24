@@ -54,10 +54,10 @@ Statuswerte:
 | R7.5 Genau ein Bild pro Mineral | UTC-IMAGE-001, UTC-IMAGE-002, ITC-CSV-001 | Unit/Integration | xUnit | Covered | Unit-Tests für Bildersetzung vorhanden; Integration offen |
 | R8.1 Koordinaten manuell bearbeiten | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R8.2 Koordinaten-Popup öffnen | E2E-COORD-001, E2E-COORD-002 | E2E | Playwright | Covered | Popup wird im E2E-Test geöffnet |
-| R8.3 Koordinaten temporär auswählen | UTC-COORD-001 | Unit/E2E | xUnit, Playwright | Failing | Koordinaten werden aktuell sofort ins Mineral geschrieben |
+| R8.3 Koordinaten temporär auswählen | UTC-COORD-001 | Unit | xUnit | Covered | Koordinaten werden temporär im ViewModel gehalten |
 | R8.4 Ausgewählte Koordinaten anzeigen | E2E-COORD-002 | E2E | Playwright | Covered | Popup-Anzeige wird nach Kartenauswahl im E2E-Test geprüft |
-| R8.5 Koordinatenauswahl abbrechen | UTC-COORD-002, E2E-COORD-001 | Unit/E2E | xUnit, Playwright | Failing | E2E deckt Abbrechen ohne neue Auswahl ab; Abbrechen nach Kartenauswahl ist weiterhin Soll/Ist-Abweichung |
-| R8.6 Koordinatenauswahl übernehmen | E2E-COORD-002 | E2E | Playwright | Covered | Übernahme in die Tabellenzeile wird im E2E-Test geprüft |
+| R8.5 Koordinatenauswahl abbrechen | UTC-COORD-002, E2E-COORD-001 | Unit/E2E | xUnit, Playwright | Covered | Abbrechen nach Kartenauswahl behält die Originalkoordinaten |
+| R8.6 Koordinatenauswahl übernehmen | UTC-COORD-003, E2E-COORD-002 | Unit/E2E | xUnit, Playwright | Covered | Übernahme in ViewModel und Tabellenzeile wird geprüft |
 | R9.1 Änderungen speichern | UTC-SAVE-001, UTC-SAVE-002, UTC-SAVE-003, UTC-SAVE-004 | Unit/Integration/E2E | xUnit, Playwright | Covered | Unit-Tests fürs Speichern vorhanden; Integration offen |
 | R9.2 Neue Mineralien speichern | UTC-SAVE-001, ITC-API-001 | Unit/Integration | xUnit | Covered | POST im ViewModel und API-Persistenz getestet |
 | R9.3 Geänderte Mineralien speichern | UTC-SAVE-002, ITC-API-002 | Unit/Integration | xUnit | Covered | PUT im ViewModel und API-Persistenz getestet |

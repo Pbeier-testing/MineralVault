@@ -10,7 +10,7 @@ public class CoordinatePickerTests
     [Trait("TestCase", "E2E-COORD-001")]
     [Trait("Requirement", "R8.2")]
     [Trait("Requirement", "R8.5")]
-    public async Task CoordinatePicker_WhenCancelledWithoutNewSelection_KeepsOriginalCoordinates()
+    public async Task CoordinatePicker_WhenCancelledAfterNewSelection_KeepsOriginalCoordinates()
     {
         using var playwright = await Playwright.CreateAsync();
         await using var browser = await E2ETestContext.LaunchBrowserAsync(playwright);
@@ -31,6 +31,20 @@ public class CoordinatePickerTests
 
         await firstRow.Locator("[data-testid='open-coordinate-picker-button']").ClickAsync();
         await page.WaitForSelectorAsync("[data-testid='coordinate-picker-modal']");
+        await page.WaitForFunctionAsync("() => window.mapBox?.pickerMap !== undefined");
+
+        var originalPickerValue = await page.Locator("[data-testid='coordinate-picker-value']").InnerTextAsync();
+        var pickerMapBox = await page.Locator("[data-testid='coordinate-picker-map']").BoundingBoxAsync();
+        Assert.NotNull(pickerMapBox);
+
+        await page.Mouse.ClickAsync(
+            pickerMapBox.X + pickerMapBox.Width * 0.65f,
+            pickerMapBox.Y + pickerMapBox.Height * 0.40f);
+
+        await WaitForPickerValueToChangeAsync(page, originalPickerValue);
+
+        Assert.Equal(originalLatitude, await latitudeInput.InputValueAsync());
+        Assert.Equal(originalLongitude, await longitudeInput.InputValueAsync());
 
         await page.ClickAsync("[data-testid='coordinate-picker-cancel-button']");
         await page.WaitForSelectorAsync("[data-testid='coordinate-picker-modal']", new PageWaitForSelectorOptions
@@ -78,27 +92,13 @@ public class CoordinatePickerTests
             pickerMapBox.X + pickerMapBox.Width * 0.65f,
             pickerMapBox.Y + pickerMapBox.Height * 0.40f);
 
-        await page.WaitForFunctionAsync(
-            @"([latSelector, lonSelector, originalLat, originalLon]) => {
-                const latitude = document.querySelector(latSelector)?.value;
-                const longitude = document.querySelector(lonSelector)?.value;
-                return latitude !== originalLat && longitude !== originalLon;
-            }",
-            new object[]
-            {
-                "[data-testid='mineral-table-row']:first-child [data-testid='mineral-latitude-input']",
-                "[data-testid='mineral-table-row']:first-child [data-testid='mineral-longitude-input']",
-                originalLatitude,
-                originalLongitude
-            });
+        await WaitForPickerValueToChangeAsync(page, originalPickerValue);
 
-        var selectedLatitude = await latitudeInput.InputValueAsync();
-        var selectedLongitude = await longitudeInput.InputValueAsync();
         var selectedPickerValue = await page.Locator("[data-testid='coordinate-picker-value']").InnerTextAsync();
 
         Assert.NotEqual(originalPickerValue, selectedPickerValue);
-        Assert.NotEqual(originalLatitude, selectedLatitude);
-        Assert.NotEqual(originalLongitude, selectedLongitude);
+        Assert.Equal(originalLatitude, await latitudeInput.InputValueAsync());
+        Assert.Equal(originalLongitude, await longitudeInput.InputValueAsync());
 
         await page.ClickAsync("[data-testid='coordinate-picker-apply-button']");
         await page.WaitForSelectorAsync("[data-testid='coordinate-picker-modal']", new PageWaitForSelectorOptions
@@ -106,7 +106,17 @@ public class CoordinatePickerTests
             State = WaitForSelectorState.Detached
         });
 
-        Assert.Equal(selectedLatitude, await latitudeInput.InputValueAsync());
-        Assert.Equal(selectedLongitude, await longitudeInput.InputValueAsync());
+        Assert.NotEqual(originalLatitude, await latitudeInput.InputValueAsync());
+        Assert.NotEqual(originalLongitude, await longitudeInput.InputValueAsync());
+    }
+
+    private static async Task WaitForPickerValueToChangeAsync(IPage page, string originalPickerValue)
+    {
+        await page.WaitForFunctionAsync(
+            @"originalValue => {
+                const element = document.querySelector('[data-testid=""coordinate-picker-value""]');
+                return element?.textContent?.trim() !== originalValue.trim();
+            }",
+            originalPickerValue);
     }
 }
