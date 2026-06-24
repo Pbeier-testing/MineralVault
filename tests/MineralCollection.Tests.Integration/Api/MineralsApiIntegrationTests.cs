@@ -79,4 +79,28 @@ public class MineralsApiIntegrationTests
         Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
+
+    [Theory]
+    [Trait("TestLevel", "Integration")]
+    [Trait("TestCase", "ITC-API-004")]
+    [Trait("Requirement", "R10.4")]
+    [Trait("Requirement", "R10.5")]
+    [Trait("Requirement", "R10.6")]
+    [InlineData(1800, null)]
+    [InlineData(null, 1800)]
+    public async Task PostMineral_WhenYearIsInvalid_ReturnsBadRequest(int? fundjahr, int? erwerbsjahr)
+    {
+        await using var factory = new MineralApiFactory();
+        var client = factory.CreateClient();
+        var mineral = new Mineral
+        {
+            Name = "Quarz",
+            Fundjahr = fundjahr,
+            Erwerbsjahr = erwerbsjahr
+        };
+
+        var postResponse = await client.PostAsJsonAsync("/api/minerals", mineral);
+
+        Assert.Equal(HttpStatusCode.BadRequest, postResponse.StatusCode);
+    }
 }

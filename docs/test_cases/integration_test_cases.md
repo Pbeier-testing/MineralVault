@@ -36,7 +36,22 @@ Integration Tests prüfen das Zusammenspiel von API, Datenbank und Dateisystem.
 **Automation:** xUnit, WebApplicationFactory, SQLite-Testdatenbank  
 
 **Expected Result:**
-- Eine bestätigter Löschung entfernt den Datenbankeintrag.
+- Eine bestätigte Löschung entfernt den Datenbankeintrag.
+
+## ITC-API-004 - Ungültige Jahreswerte per API ablehnen
+
+**Related Requirements:** R10.4, R10.5, R10.6  
+**Status:** Automated  
+**Test Level:** Integration  
+**Automation:** xUnit, SQLite-Testdatenbank  
+
+**Steps:**
+1. Starte die API mit isolierter Testdatenbank.
+2. Sende `POST api/minerals` mit ungültigem Fundjahr.
+3. Sende `POST api/minerals` mit ungültigem Erwerbsjahr.
+
+**Expected Result:**
+- Die API lehnt ungültige Jahreswerte mit `400 Bad Request` ab.
 
 ## ITC-IMG-001 - Bilddatei speichern
 
