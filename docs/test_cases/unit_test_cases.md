@@ -395,6 +395,21 @@ Unit Tests prüfen isolierte Logik ohne echte Datenbank, Browser oder Dateisyste
 - Es wird kein weiterer HTTP-Request gesendet.
 - `IsSaving` bleibt `true`.
 
+## UTC-SAVE-005 - API-Validierungsfehler wird als Speichermeldung angezeigt
+
+**Related Requirements:** R10.4, R10.5  
+**Status:** Automated  
+**Test Level:** Unit  
+**Automation:** xUnit  
+
+**Test Data:**
+- API antwortet auf `POST api/minerals` mit `400 Bad Request`.
+- Die Antwort enthält einen Validierungsfehler für das Fundjahr.
+
+**Expected Result:**
+- Das ViewModel setzt eine Fehlermeldung für die Benutzeroberfläche.
+- Die Meldung enthält den betroffenen Mineralnamen und den Validierungstext.
+
 ## UTC-IMAGE-001 - Erfolgreicher Upload ersetzt vorhandenes Bild
 
 **Related Requirements:** R7.5  

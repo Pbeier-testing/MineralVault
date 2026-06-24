@@ -131,6 +131,15 @@ else if (ActiveTab == "admin")
             </div>
         </div>
 
+        @if (!string.IsNullOrWhiteSpace(VM.SaveMessage))
+        {
+            <div class="alert @(VM.HasSaveError ? "alert-danger" : "alert-success") py-2 mb-3"
+                 role="alert"
+                 data-testid="save-status-message">
+                @VM.SaveMessage
+            </div>
+        }
+
         <div class="card shadow-sm border-0 flex-grow-1 overflow-hidden">
             <div class="table-responsive h-100" style="overflow-y: auto;">
                 <table class="table table-hover align-middle mb-0 bg-white" data-testid="minerals-table">

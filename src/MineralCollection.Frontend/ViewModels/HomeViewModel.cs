@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Forms;
@@ -27,6 +28,8 @@ namespace MineralCollection.Frontend.ViewModels
         public double? PendingLaengengrad { get; set; }
         public string? SelectedImageUrl { get; set; }
         public bool ShowImagePreview { get; set; }
+        public string? SaveMessage { get; set; }
+        public bool HasSaveError { get; set; }
 
         public string SearchTerm
         {
@@ -112,10 +115,14 @@ namespace MineralCollection.Frontend.ViewModels
         {
             if (Minerals == null || IsSaving) return;
             IsSaving = true;
+            SaveMessage = null;
+            HasSaveError = false;
             NotifyStateChanged();
 
             try
             {
+                var errors = new List<string>();
+
                 foreach (var m in FilteredMinerals.ToList())
                 {
                     HttpResponseMessage response;
@@ -136,19 +143,74 @@ namespace MineralCollection.Frontend.ViewModels
 
                     if (!response.IsSuccessStatusCode)
                     {
-                        Console.WriteLine($"Fehler bei ID {m.Id}: {response.ReasonPhrase}");
+                        errors.Add(await BuildSaveErrorMessageAsync(m, response));
                     }
                 }
-                await _js.InvokeVoidAsync("alert", "Änderungen gespeichert!");
+
+                if (errors.Count > 0)
+                {
+                    HasSaveError = true;
+                    SaveMessage = string.Join(" ", errors);
+                }
+                else
+                {
+                    SaveMessage = "Änderungen gespeichert.";
+                }
             }
             catch (Exception ex)
             {
-                await _js.InvokeVoidAsync("alert", "Fehler: " + ex.Message);
+                HasSaveError = true;
+                SaveMessage = "Fehler beim Speichern: " + ex.Message;
             }
             finally
             {
                 IsSaving = false;
                 NotifyStateChanged();
+            }
+        }
+
+        private static async Task<string> BuildSaveErrorMessageAsync(Mineral mineral, HttpResponseMessage response)
+        {
+            var details = await ReadValidationDetailsAsync(response);
+            var mineralName = string.IsNullOrWhiteSpace(mineral.Name) ? "Mineral" : mineral.Name;
+
+            if (!string.IsNullOrWhiteSpace(details))
+            {
+                return $"{mineralName}: {details}";
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                return $"{mineralName}: Bitte prüfe die Eingaben.";
+            }
+
+            return $"{mineralName}: Speichern fehlgeschlagen ({(int)response.StatusCode}).";
+        }
+
+        private static async Task<string?> ReadValidationDetailsAsync(HttpResponseMessage response)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(content)) return null;
+
+            try
+            {
+                using var document = JsonDocument.Parse(content);
+                if (!document.RootElement.TryGetProperty("errors", out var errors) ||
+                    errors.ValueKind != JsonValueKind.Object)
+                {
+                    return null;
+                }
+
+                var messages = errors.EnumerateObject()
+                    .SelectMany(error => error.Value.EnumerateArray())
+                    .Select(message => message.GetString())
+                    .Where(message => !string.IsNullOrWhiteSpace(message));
+
+                return string.Join(" ", messages);
+            }
+            catch (JsonException)
+            {
+                return null;
             }
         }
 

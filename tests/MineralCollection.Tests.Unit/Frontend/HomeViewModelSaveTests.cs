@@ -28,6 +28,8 @@ public class HomeViewModelSaveTests
         Assert.Equal("/api/minerals", request.RequestUri?.PathAndQuery);
         Assert.Equal(42, mineral.Id);
         Assert.False(viewModel.IsSaving);
+        Assert.False(viewModel.HasSaveError);
+        Assert.Equal("Änderungen gespeichert.", viewModel.SaveMessage);
     }
 
     [Fact]
@@ -49,6 +51,8 @@ public class HomeViewModelSaveTests
         Assert.Equal(HttpMethod.Put, request.Method);
         Assert.Equal("/api/minerals/7", request.RequestUri?.PathAndQuery);
         Assert.False(viewModel.IsSaving);
+        Assert.False(viewModel.HasSaveError);
+        Assert.Equal("Änderungen gespeichert.", viewModel.SaveMessage);
     }
 
     [Fact]
@@ -83,6 +87,27 @@ public class HomeViewModelSaveTests
         Assert.True(viewModel.IsSaving);
     }
 
+    [Fact]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-SAVE-005")]
+    [Trait("Requirement", "R10.4")]
+    [Trait("Requirement", "R10.5")]
+    public async Task SaveChangesAsync_WhenApiReturnsValidationError_SetsSaveErrorMessage()
+    {
+        var httpHandler = new FakeHttpMessageHandler();
+        httpHandler.EnqueueResponse(ValidationProblemResponse(
+            """{"errors":{"Fundjahr":["Fundjahr muss zwischen 1801 und 2026 liegen."]}}"""));
+        var viewModel = CreateViewModel(httpHandler);
+        viewModel.Minerals = [new Mineral { Id = 0, Name = "Quarz", Fundjahr = 1800 }];
+
+        await viewModel.SaveChangesAsync();
+
+        Assert.False(viewModel.IsSaving);
+        Assert.True(viewModel.HasSaveError);
+        Assert.Contains("Quarz", viewModel.SaveMessage);
+        Assert.Contains("Fundjahr muss zwischen", viewModel.SaveMessage);
+    }
+
     private static HomeViewModel CreateViewModel(FakeHttpMessageHandler httpHandler)
     {
         var httpClient = new HttpClient(httpHandler)
@@ -98,6 +123,14 @@ public class HomeViewModelSaveTests
         return new HttpResponseMessage(HttpStatusCode.Created)
         {
             Content = new StringContent(json, Encoding.UTF8, "application/json")
+        };
+    }
+
+    private static HttpResponseMessage ValidationProblemResponse(string json)
+    {
+        return new HttpResponseMessage(HttpStatusCode.BadRequest)
+        {
+            Content = new StringContent(json, Encoding.UTF8, "application/problem+json")
         };
     }
 }
