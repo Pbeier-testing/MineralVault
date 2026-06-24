@@ -2,8 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MineralCollection.Domain;
 
-public class Mineral
+public class Mineral : IValidatableObject
 {
+    private const int EarliestValidYear = 1801;
+
     public int Id { get; set; }
     public string? Nummer { get; set; }
 
@@ -28,6 +30,25 @@ public class Mineral
 
 
     public List<MineralImage> Images { get; set; } = new();
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var currentYear = DateTime.Now.Year;
+
+        if (Fundjahr is < EarliestValidYear || Fundjahr > currentYear)
+        {
+            yield return new ValidationResult(
+                $"Fundjahr muss zwischen {EarliestValidYear} und {currentYear} liegen.",
+                [nameof(Fundjahr)]);
+        }
+
+        if (Erwerbsjahr is < EarliestValidYear || Erwerbsjahr > currentYear)
+        {
+            yield return new ValidationResult(
+                $"Erwerbjahr muss zwischen {EarliestValidYear} und {currentYear} liegen.",
+                [nameof(Erwerbsjahr)]);
+        }
+    }
 }
 
 public class MineralImage

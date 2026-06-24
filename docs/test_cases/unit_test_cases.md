@@ -96,6 +96,68 @@ Unit Tests prüfen isolierte Logik ohne echte Datenbank, Browser oder Dateisyste
 **Expected Result:**
 - Es wird ein Validierungsfehler für den Längengrad erzeugt.
 
+## UTC-VAL-006 - Gültige Fundjahr-Werte akzeptieren
+
+**Related Requirements:** R10.5  
+**Status:** Automated  
+**Test Level:** Unit  
+**Automation:** xUnit  
+
+**Test Data:**
+- `Fundjahr = null`
+- `Fundjahr = 1801`
+- `Fundjahr = 1984`
+- `Fundjahr = aktuelles Kalenderjahr`
+
+**Expected Result:**
+- Es wird kein Validierungsfehler für das Fundjahr erzeugt.
+
+## UTC-VAL-007 - Ungültige Fundjahr-Werte ablehnen
+
+**Related Requirements:** R10.5, R10.4  
+**Status:** Automated  
+**Test Level:** Unit  
+**Automation:** xUnit  
+
+**Test Data:**
+- `Fundjahr = 1800`
+- `Fundjahr = 1799`
+- `Fundjahr = aktuelles Kalenderjahr + 1`
+
+**Expected Result:**
+- Es wird ein Validierungsfehler für das Fundjahr erzeugt.
+
+## UTC-VAL-008 - Gültige Erwerbjahr-Werte akzeptieren
+
+**Related Requirements:** R10.6  
+**Status:** Automated  
+**Test Level:** Unit  
+**Automation:** xUnit  
+
+**Test Data:**
+- `Erwerbjahr = null`
+- `Erwerbjahr = 1801`
+- `Erwerbjahr = 1984`
+- `Erwerbjahr = aktuelles Kalenderjahr`
+
+**Expected Result:**
+- Es wird kein Validierungsfehler für das Erwerbjahr erzeugt.
+
+## UTC-VAL-009 - Ungültige Erwerbjahr-Werte ablehnen
+
+**Related Requirements:** R10.6, R10.4  
+**Status:** Automated  
+**Test Level:** Unit  
+**Automation:** xUnit  
+
+**Test Data:**
+- `Erwerbjahr = 1800`
+- `Erwerbjahr = 1799`
+- `Erwerbjahr = aktuelles Kalenderjahr + 1`
+
+**Expected Result:**
+- Es wird ein Validierungsfehler für das Erwerbjahr erzeugt.
+
 ## UTC-SEARCH-001 - Suche findet Mineralname als Teiltreffer
 
 **Related Requirements:** R4.3, R4.5  

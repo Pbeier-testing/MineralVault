@@ -83,6 +83,124 @@ public class MineralValidationTests
         Assert.Contains(errors, error => error.MemberNames.Contains(nameof(Mineral.Laengengrad)));
     }
 
+    [Theory]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-VAL-006")]
+    [Trait("Requirement", "R10.5")]
+    [InlineData(null)]
+    [InlineData(1801)]
+    [InlineData(1984)]
+    public void Validate_WhenFundjahrIsInsideAllowedRange_ReturnsNoFundjahrError(int? fundjahr)
+    {
+        var mineral = new Mineral { Name = "Quarz", Fundjahr = fundjahr };
+
+        var errors = Validate(mineral);
+
+        Assert.DoesNotContain(errors, error => error.MemberNames.Contains(nameof(Mineral.Fundjahr)));
+    }
+
+    [Fact]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-VAL-006")]
+    [Trait("Requirement", "R10.5")]
+    public void Validate_WhenFundjahrIsCurrentYear_ReturnsNoFundjahrError()
+    {
+        var mineral = new Mineral { Name = "Quarz", Fundjahr = DateTime.Now.Year };
+
+        var errors = Validate(mineral);
+
+        Assert.DoesNotContain(errors, error => error.MemberNames.Contains(nameof(Mineral.Fundjahr)));
+    }
+
+    [Theory]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-VAL-007")]
+    [Trait("Requirement", "R10.5")]
+    [Trait("Requirement", "R10.4")]
+    [InlineData(1799)]
+    [InlineData(1800)]
+    public void Validate_WhenFundjahrIsOutsideAllowedRange_ReturnsFundjahrError(int fundjahr)
+    {
+        var mineral = new Mineral { Name = "Quarz", Fundjahr = fundjahr };
+
+        var errors = Validate(mineral);
+
+        Assert.Contains(errors, error => error.MemberNames.Contains(nameof(Mineral.Fundjahr)));
+    }
+
+    [Fact]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-VAL-007")]
+    [Trait("Requirement", "R10.5")]
+    [Trait("Requirement", "R10.4")]
+    public void Validate_WhenFundjahrIsInFuture_ReturnsFundjahrError()
+    {
+        var mineral = new Mineral { Name = "Quarz", Fundjahr = DateTime.Now.Year + 1 };
+
+        var errors = Validate(mineral);
+
+        Assert.Contains(errors, error => error.MemberNames.Contains(nameof(Mineral.Fundjahr)));
+    }
+
+    [Theory]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-VAL-008")]
+    [Trait("Requirement", "R10.6")]
+    [InlineData(null)]
+    [InlineData(1801)]
+    [InlineData(1984)]
+    public void Validate_WhenErwerbsjahrIsInsideAllowedRange_ReturnsNoErwerbsjahrError(int? erwerbsjahr)
+    {
+        var mineral = new Mineral { Name = "Quarz", Erwerbsjahr = erwerbsjahr };
+
+        var errors = Validate(mineral);
+
+        Assert.DoesNotContain(errors, error => error.MemberNames.Contains(nameof(Mineral.Erwerbsjahr)));
+    }
+
+    [Fact]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-VAL-008")]
+    [Trait("Requirement", "R10.6")]
+    public void Validate_WhenErwerbsjahrIsCurrentYear_ReturnsNoErwerbsjahrError()
+    {
+        var mineral = new Mineral { Name = "Quarz", Erwerbsjahr = DateTime.Now.Year };
+
+        var errors = Validate(mineral);
+
+        Assert.DoesNotContain(errors, error => error.MemberNames.Contains(nameof(Mineral.Erwerbsjahr)));
+    }
+
+    [Theory]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-VAL-009")]
+    [Trait("Requirement", "R10.6")]
+    [Trait("Requirement", "R10.4")]
+    [InlineData(1799)]
+    [InlineData(1800)]
+    public void Validate_WhenErwerbsjahrIsOutsideAllowedRange_ReturnsErwerbsjahrError(int erwerbsjahr)
+    {
+        var mineral = new Mineral { Name = "Quarz", Erwerbsjahr = erwerbsjahr };
+
+        var errors = Validate(mineral);
+
+        Assert.Contains(errors, error => error.MemberNames.Contains(nameof(Mineral.Erwerbsjahr)));
+    }
+
+    [Fact]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-VAL-009")]
+    [Trait("Requirement", "R10.6")]
+    [Trait("Requirement", "R10.4")]
+    public void Validate_WhenErwerbsjahrIsInFuture_ReturnsErwerbsjahrError()
+    {
+        var mineral = new Mineral { Name = "Quarz", Erwerbsjahr = DateTime.Now.Year + 1 };
+
+        var errors = Validate(mineral);
+
+        Assert.Contains(errors, error => error.MemberNames.Contains(nameof(Mineral.Erwerbsjahr)));
+    }
+
     private static List<ValidationResult> Validate(Mineral mineral)
     {
         var context = new ValidationContext(mineral);

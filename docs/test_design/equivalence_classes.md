@@ -41,38 +41,37 @@ Diese Analyse dokumentiert ausgewählte Eingabewerte der MineralVault App nach g
 ## Fundjahr
 
 **Feld:** `Fundjahr`  
-**Requirement:** noch nicht explizit definiert  
-**Vorgeschlagene Regel:** Fundjahr darf leer sein. Wenn ein Wert angegeben ist, muss er größer als 1800 und kleiner oder gleich dem aktuellen Kalenderjahr sein.
+**Requirement:** R10.5  
+**Regel:** Fundjahr darf leer sein. Wenn ein Wert angegeben ist, muss er größer als 1800 und kleiner oder gleich dem aktuellen Kalenderjahr sein.
 
 Für das aktuelle Testdesign gilt als Bezugsjahr `2026`.
 
 | Klasse | Wertebereich / Beispiel | Gültigkeit | Repräsentative Werte | Abdeckung |
 | --- | --- | --- | --- | --- |
-| leer | `null` | gültig | `null` | offen |
-| unterhalb Untergrenze | kleiner `1800` | ungültig | `1799` | offen |
-| Untergrenze | exakt `1800` | ungültig | `1800` | offen |
-| erster gültiger Wert | exakt `1801` | gültig | `1801` | offen |
-| gültiger Innenbereich | `1801` bis aktuelles Kalenderjahr | gültig | `1984`, `2020` | offen |
-| aktuelle Obergrenze | aktuelles Kalenderjahr | gültig | `2026` | offen |
-| Zukunft | größer als aktuelles Kalenderjahr | ungültig | `2027` | offen |
+| leer | `null` | gültig | `null` | UTC-VAL-006 |
+| unterhalb Untergrenze | kleiner `1800` | ungültig | `1799` | UTC-VAL-007 |
+| Untergrenze | exakt `1800` | ungültig | `1800` | UTC-VAL-007 |
+| erster gültiger Wert | exakt `1801` | gültig | `1801` | UTC-VAL-006 |
+| gültiger Innenbereich | `1801` bis aktuelles Kalenderjahr | gültig | `1984`, `2020` | UTC-VAL-006 |
+| aktuelle Obergrenze | aktuelles Kalenderjahr | gültig | `2026` | UTC-VAL-006 |
+| Zukunft | größer als aktuelles Kalenderjahr | ungültig | `2027` | UTC-VAL-007 |
 | nicht numerisch | z. B. Texteingabe | ungültig | `abc` | UI/E2E offen |
 
 ## Erwerbsjahr
 
 **Feld:** `Erwerbsjahr`  
-**Requirement:** noch nicht explizit definiert  
-**Vorgeschlagene Regel:** Erwerbsjahr darf leer sein. Wenn ein Wert angegeben ist, muss er größer als 1800 und kleiner oder gleich dem aktuellen Kalenderjahr sein.
+**Requirement:** R10.6  
+**Regel:** Erwerbsjahr darf leer sein. Wenn ein Wert angegeben ist, muss er größer als 1800 und kleiner oder gleich dem aktuellen Kalenderjahr sein.
 
 Für das aktuelle Testdesign gilt als Bezugsjahr `2026`.
 
 | Klasse | Wertebereich / Beispiel | Gültigkeit | Repräsentative Werte | Abdeckung |
 | --- | --- | --- | --- | --- |
-| leer | `null` | gültig | `null` | offen |
-| unterhalb Untergrenze | kleiner `1800` | ungültig | `1799` | offen |
-| Untergrenze | exakt `1800` | ungültig | `1800` | offen |
-| erster gültiger Wert | exakt `1801` | gültig | `1801` | offen |
-| gültiger Innenbereich | `1801` bis aktuelles Kalenderjahr | gültig | `1984`, `2020` | offen |
-| aktuelle Obergrenze | aktuelles Kalenderjahr | gültig | `2026` | offen |
-| Zukunft | größer als aktuelles Kalenderjahr | ungültig | `2027` | offen |
+| leer | `null` | gültig | `null` | UTC-VAL-008 |
+| unterhalb Untergrenze | kleiner `1800` | ungültig | `1799` | UTC-VAL-009 |
+| Untergrenze | exakt `1800` | ungültig | `1800` | UTC-VAL-009 |
+| erster gültiger Wert | exakt `1801` | gültig | `1801` | UTC-VAL-008 |
+| gültiger Innenbereich | `1801` bis aktuelles Kalenderjahr | gültig | `1984`, `2020` | UTC-VAL-008 |
+| aktuelle Obergrenze | aktuelles Kalenderjahr | gültig | `2026` | UTC-VAL-008 |
+| Zukunft | größer als aktuelles Kalenderjahr | ungültig | `2027` | UTC-VAL-009 |
 | nicht numerisch | z. B. Texteingabe | ungültig | `abc` | UI/E2E offen |
-

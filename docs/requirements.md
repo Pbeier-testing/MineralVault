@@ -221,6 +221,12 @@ Falls ein Längengrad angegeben ist, muss er zwischen -180 und 180 liegen.
 ### R10.4 - Verständliche Fehlermeldungen
 Bei ungültigen Eingaben muss dem Benutzer eine verständliche Fehlermeldung angezeigt werden.
 
+### R10.5 - Fundjahr validieren
+Falls ein Fundjahr angegeben ist, muss es größer als 1800 und kleiner oder gleich dem aktuellen Kalenderjahr sein.
+
+### R10.6 - Erwerbjahr validieren
+Falls ein Erwerbjahr angegeben ist, muss es größer als 1800 und kleiner oder gleich dem aktuellen Kalenderjahr sein.
+
 ---
 
 ## 11. Nicht-funktionale Anforderungen
