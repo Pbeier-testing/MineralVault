@@ -71,8 +71,8 @@ Statuswerte:
 | R10.1 Pflichtfeld Hauptmineral | UTC-VAL-001 | Unit/E2E | xUnit, Playwright | Covered | Model-Validierung getestet; UI offen |
 | R10.2 Breitengrad validieren | UTC-VAL-002, UTC-VAL-003 | Unit/E2E | xUnit, Playwright | Covered | Model-Grenzwerte getestet; UI offen |
 | R10.3 Längengrad validieren | UTC-VAL-004, UTC-VAL-005 | Unit/E2E | xUnit, Playwright | Covered | Model-Grenzwerte getestet; UI offen |
-| R10.4 Verständliche Fehlermeldungen | UTC-VAL-001, UTC-VAL-003, UTC-VAL-005, UTC-VAL-007, UTC-VAL-009, UTC-SAVE-005, ITC-API-004 | Unit/Integration/E2E | xUnit, Playwright | Covered | Model-, API- und ViewModel-Fehlermeldungen getestet; E2E offen |
-| R10.5 Fundjahr validieren | UTC-VAL-006, UTC-VAL-007, ITC-API-004 | Unit/Integration | xUnit | Covered | Äquivalenzklassen für leere, gültige und ungültige Fundjahre getestet; API lehnt ungültige Werte ab |
+| R10.4 Verständliche Fehlermeldungen | UTC-VAL-001, UTC-VAL-003, UTC-VAL-005, UTC-VAL-007, UTC-VAL-009, UTC-SAVE-005, ITC-API-004, E2E-VAL-001 | Unit/Integration/E2E | xUnit, Playwright | Covered | Model-, API- und UI-Fehlermeldungen getestet |
+| R10.5 Fundjahr validieren | UTC-VAL-006, UTC-VAL-007, ITC-API-004, E2E-VAL-001 | Unit/Integration/E2E | xUnit, Playwright | Covered | Äquivalenzklassen für leere, gültige und ungültige Fundjahre getestet; API und UI-Pfad abgedeckt |
 | R10.6 Erwerbjahr validieren | UTC-VAL-008, UTC-VAL-009, ITC-API-004 | Unit/Integration | xUnit | Covered | Äquivalenzklassen für leere, gültige und ungültige Erwerbjahre getestet; API lehnt ungültige Werte ab |
 | R11.1 Scrollbare Listen | MTC-UI-001, MTC-UI-003 | Manual | Manual | Manual | Visuelle Bedienbarkeit |
 | R11.2 Bedienbarkeit | MTC-UI-002, MTC-UI-003 | Manual | Manual | Manual | Mausbedienung |

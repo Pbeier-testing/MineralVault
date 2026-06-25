@@ -88,6 +88,22 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 - Die neue Zeile hat Standardwerte.
 - Die neue Zeile ist optisch hervorgehoben.
 
+## E2E-VAL-001 - Ungültiges Fundjahr zeigt Fehlermeldung beim Speichern
+
+**Related Requirements:** R10.4, R10.5  
+**Status:** Automated  
+**Test Level:** E2E  
+**Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer wechselt in die Tabellenansicht.
+- Der Benutzer trägt in einer bestehenden Zeile ein ungültiges Fundjahr ein.
+- Der Benutzer klickt auf `Speichern`.
+
+**Expected Result:**
+- Die Anwendung zeigt eine sichtbare Fehlermeldung.
+- Die Meldung enthält die Fehlermeldung zum Fundjahr.
+
 ## E2E-COORD-001 - Koordinaten-Popup abbrechen
 
 **Related Requirements:** R8.2, R8.5  

@@ -86,4 +86,33 @@ public class TableTests
         Assert.Equal("0", numberValue);
         Assert.Equal("Neues Mineral", nameValue);
     }
+
+    [Fact]
+    [Trait("TestLevel", "E2E")]
+    [Trait("TestCase", "E2E-VAL-001")]
+    [Trait("Requirement", "R10.4")]
+    [Trait("Requirement", "R10.5")]
+    public async Task TableView_WhenInvalidDiscoveryYearIsSaved_ShowsValidationMessage()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await E2ETestContext.LaunchBrowserAsync(playwright);
+        var page = await browser.NewPageAsync();
+
+        await page.GotoAsync(E2ETestContext.BaseUrl);
+        await page.WaitForSelectorAsync("[data-testid='map-view']");
+
+        await page.ClickAsync("[data-testid='nav-table-view']");
+        await page.WaitForSelectorAsync("[data-testid='minerals-table']");
+
+        var firstRow = page.Locator("[data-testid='mineral-table-row']").First;
+        await firstRow.Locator("[data-testid='mineral-discovery-year-input']").FillAsync("1800");
+        await page.ClickAsync("[data-testid='save-minerals-button']");
+
+        var saveStatus = page.Locator("[data-testid='save-status-message']");
+        await saveStatus.WaitForAsync();
+
+        var saveStatusText = await saveStatus.InnerTextAsync();
+
+        Assert.Contains("Fundjahr muss zwischen", saveStatusText);
+    }
 }
