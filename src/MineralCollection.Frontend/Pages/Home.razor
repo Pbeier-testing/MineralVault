@@ -164,7 +164,7 @@ else if (ActiveTab == "admin")
                             @foreach (var m in VM.FilteredMinerals)
                             {
                                 <tr class="@(m.Id == 0 ? "table-row-new" : "")" style="transition: background-color 0.5s ease;" data-testid="mineral-table-row" data-mineral-id="@m.Id">
-                                    <td><input type="text" class="form-control form-control-sm border-0 bg-light" data-testid="mineral-number-input" @bind="m.Nummer" /></td>
+                                    <td><input type="text" class="form-control form-control-sm border-0 bg-light" data-testid="mineral-number-input" @bind="m.Nummer" @bind:after="() => VM.MarkMineralAsChanged(m)" /></td>
                                     <td>
                                         <div class="position-relative shadow-sm rounded border" style="width: 50px; height: 50px; overflow: hidden; background: #f8f9fa;">
                                             @{
@@ -181,18 +181,18 @@ else if (ActiveTab == "admin")
                                             <InputFile OnChange="@(e => VM.HandleImageUploadAsync(e.File, m))" data-testid="mineral-image-input" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" style="cursor: pointer; z-index: 10;" />
                                         </div>
                                     </td>
-                                    <td><input type="text" class="form-control form-control-sm fw-bold border-0 bg-light" data-testid="mineral-name-input" @bind="m.Name" /></td>
-                                    <td><input type="text" class="form-control form-control-sm border-0" data-testid="mineral-companion-input" @bind="m.Begleitmineral" /></td>
-                                    <td><input type="text" class="form-control form-control-sm border-0" data-testid="mineral-location-input" @bind="m.Fundort" /></td>
-                                    <td><input type="text" class="form-control form-control-sm border-0" data-testid="mineral-region-input" @bind="m.Region" /></td>
-                                    <td><input type="text" class="form-control form-control-sm border-0" data-testid="mineral-country-input" @bind="m.Land" /></td>
-                                    <td><input type="number" class="form-control form-control-sm border-0" data-testid="mineral-discovery-year-input" @bind="m.Fundjahr" /></td>
-                                    <td><input type="number" class="form-control form-control-sm border-0" data-testid="mineral-acquisition-year-input" @bind="m.Erwerbsjahr" /></td>
+                                    <td><input type="text" class="form-control form-control-sm fw-bold border-0 bg-light" data-testid="mineral-name-input" @bind="m.Name" @bind:after="() => VM.MarkMineralAsChanged(m)" /></td>
+                                    <td><input type="text" class="form-control form-control-sm border-0" data-testid="mineral-companion-input" @bind="m.Begleitmineral" @bind:after="() => VM.MarkMineralAsChanged(m)" /></td>
+                                    <td><input type="text" class="form-control form-control-sm border-0" data-testid="mineral-location-input" @bind="m.Fundort" @bind:after="() => VM.MarkMineralAsChanged(m)" /></td>
+                                    <td><input type="text" class="form-control form-control-sm border-0" data-testid="mineral-region-input" @bind="m.Region" @bind:after="() => VM.MarkMineralAsChanged(m)" /></td>
+                                    <td><input type="text" class="form-control form-control-sm border-0" data-testid="mineral-country-input" @bind="m.Land" @bind:after="() => VM.MarkMineralAsChanged(m)" /></td>
+                                    <td><input type="number" class="form-control form-control-sm border-0" data-testid="mineral-discovery-year-input" @bind="m.Fundjahr" @bind:after="() => VM.MarkMineralAsChanged(m)" /></td>
+                                    <td><input type="number" class="form-control form-control-sm border-0" data-testid="mineral-acquisition-year-input" @bind="m.Erwerbsjahr" @bind:after="() => VM.MarkMineralAsChanged(m)" /></td>
                                     <td>
                                         <div class="d-flex gap-1 align-items-center">
-                                            <input type="number" step="any" class="form-control form-control-sm border-0 text-primary p-0" style="width: 65px;" data-testid="mineral-latitude-input" @bind="m.Breitengrad" />
+                                            <input type="number" step="any" class="form-control form-control-sm border-0 text-primary p-0" style="width: 65px;" data-testid="mineral-latitude-input" @bind="m.Breitengrad" @bind:after="() => VM.MarkMineralAsChanged(m)" />
                                             <span class="text-muted">|</span>
-                                            <input type="number" step="any" class="form-control form-control-sm border-0 text-primary p-0" style="width: 65px;" data-testid="mineral-longitude-input" @bind="m.Laengengrad" />
+                                            <input type="number" step="any" class="form-control form-control-sm border-0 text-primary p-0" style="width: 65px;" data-testid="mineral-longitude-input" @bind="m.Laengengrad" @bind:after="() => VM.MarkMineralAsChanged(m)" />
                                             <button class="btn btn-sm btn-outline-primary border-0 p-1" data-testid="open-coordinate-picker-button" @onclick="() => VM.OpenCoordPickerAsync(m)">
                                                 <i class="bi bi-map"></i>
                                             </button>

@@ -44,6 +44,7 @@ public class HomeViewModelSaveTests
         var viewModel = CreateViewModel(httpHandler);
         var mineral = new Mineral { Id = 7, Name = "Quarz", Nummer = "1" };
         viewModel.Minerals = [mineral];
+        viewModel.MarkMineralAsChanged(mineral);
 
         await viewModel.SaveChangesAsync();
 
@@ -53,6 +54,25 @@ public class HomeViewModelSaveTests
         Assert.False(viewModel.IsSaving);
         Assert.False(viewModel.HasSaveError);
         Assert.Equal("Änderungen gespeichert.", viewModel.SaveMessage);
+    }
+
+    [Fact]
+    [Trait("TestLevel", "Unit")]
+    [Trait("TestCase", "UTC-SAVE-006")]
+    [Trait("Requirement", "R9.1")]
+    [Trait("Requirement", "R9.3")]
+    public async Task SaveChangesAsync_WhenExistingMineralIsUnchanged_DoesNotSendRequest()
+    {
+        var httpHandler = new FakeHttpMessageHandler();
+        var viewModel = CreateViewModel(httpHandler);
+        viewModel.Minerals = [new Mineral { Id = 7, Name = "Quarz", Nummer = "1" }];
+
+        await viewModel.SaveChangesAsync();
+
+        Assert.Empty(httpHandler.Requests);
+        Assert.False(viewModel.IsSaving);
+        Assert.False(viewModel.HasSaveError);
+        Assert.Equal("Keine Änderungen zum Speichern.", viewModel.SaveMessage);
     }
 
     [Fact]

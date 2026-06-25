@@ -357,7 +357,7 @@ Unit Tests prüfen isolierte Logik ohne echte Datenbank, Browser oder Dateisyste
 - Für ein Mineral mit `Id = 0` wird ein `POST api/minerals` Request gesendet.
 - Die zurückgegebene ID wird in das Mineral übernommen.
 
-## UTC-SAVE-002 - Bestehendes Mineral wird per PUT vorbereitet
+## UTC-SAVE-002 - Geändertes bestehendes Mineral wird per PUT vorbereitet
 
 **Related Requirements:** R9.1, R9.3  
 **Status:** Automated  
@@ -365,7 +365,7 @@ Unit Tests prüfen isolierte Logik ohne echte Datenbank, Browser oder Dateisyste
 **Automation:** xUnit  
 
 **Expected Result:**
-- Für ein Mineral mit vorhandener ID wird ein `PUT api/minerals/{id}` Request gesendet.
+- Für ein geändertes Mineral mit vorhandener ID wird ein `PUT api/minerals/{id}` Request gesendet.
 
 ## UTC-SAVE-003 - Speichern ohne geladene Mineralien sendet keinen Request
 
@@ -409,6 +409,21 @@ Unit Tests prüfen isolierte Logik ohne echte Datenbank, Browser oder Dateisyste
 **Expected Result:**
 - Das ViewModel setzt eine Fehlermeldung für die Benutzeroberfläche.
 - Die Meldung enthält den betroffenen Mineralnamen und den Validierungstext.
+
+## UTC-SAVE-006 - Unverändertes bestehendes Mineral sendet keinen Request
+
+**Related Requirements:** R9.1, R9.3  
+**Status:** Automated  
+**Test Level:** Unit  
+**Automation:** xUnit  
+
+**Preconditions:**
+- Das Mineral hat eine vorhandene ID.
+- Das Mineral wurde nicht als geändert markiert.
+
+**Expected Result:**
+- Es wird kein HTTP-Request gesendet.
+- Die Benutzeroberfläche meldet, dass keine Änderungen zum Speichern vorhanden sind.
 
 ## UTC-IMAGE-001 - Erfolgreicher Upload ersetzt vorhandenes Bild
 

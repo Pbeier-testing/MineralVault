@@ -15,6 +15,7 @@ namespace MineralCollection.Frontend.ViewModels
     {
         private readonly HttpClient _http;
         private readonly IJSRuntime _js;
+        private readonly HashSet<Mineral> _changedMinerals = new(ReferenceEqualityComparer.Instance);
         private string _searchTerm = "";
 
         public event Action? OnChange;
@@ -111,6 +112,11 @@ namespace MineralCollection.Frontend.ViewModels
             NotifyStateChanged();
         }
 
+        public void MarkMineralAsChanged(Mineral mineral)
+        {
+            _changedMinerals.Add(mineral);
+        }
+
         public async Task SaveChangesAsync()
         {
             if (Minerals == null || IsSaving) return;
@@ -122,8 +128,11 @@ namespace MineralCollection.Frontend.ViewModels
             try
             {
                 var errors = new List<string>();
+                var mineralsToSave = Minerals
+                    .Where(m => m.Id == 0 || _changedMinerals.Contains(m))
+                    .ToList();
 
-                foreach (var m in FilteredMinerals.ToList())
+                foreach (var m in mineralsToSave)
                 {
                     HttpResponseMessage response;
 
@@ -134,11 +143,16 @@ namespace MineralCollection.Frontend.ViewModels
                         {
                             var createdMineral = await response.Content.ReadFromJsonAsync<Mineral>();
                             if (createdMineral != null) m.Id = createdMineral.Id;
+                            _changedMinerals.Remove(m);
                         }
                     }
                     else
                     {
                         response = await _http.PutAsJsonAsync($"api/minerals/{m.Id}", m);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            _changedMinerals.Remove(m);
+                        }
                     }
 
                     if (!response.IsSuccessStatusCode)
@@ -154,7 +168,9 @@ namespace MineralCollection.Frontend.ViewModels
                 }
                 else
                 {
-                    SaveMessage = "Änderungen gespeichert.";
+                    SaveMessage = mineralsToSave.Count == 0
+                        ? "Keine Änderungen zum Speichern."
+                        : "Änderungen gespeichert.";
                 }
             }
             catch (Exception ex)
@@ -251,6 +267,7 @@ namespace MineralCollection.Frontend.ViewModels
             {
                 ActiveMineral.Breitengrad = PendingBreitengrad;
                 ActiveMineral.Laengengrad = PendingLaengengrad;
+                MarkMineralAsChanged(ActiveMineral);
             }
 
             CloseCoordPicker();
@@ -298,6 +315,7 @@ namespace MineralCollection.Frontend.ViewModels
                         
                         m.Images.Clear();
                         m.Images.Add(new MineralImage { FileName = result.fileName });
+                        MarkMineralAsChanged(m);
                         
                         NotifyStateChanged();
                     }
