@@ -4,13 +4,15 @@ Dieses Projekt enthält Playwright-basierte End-to-End-Tests.
 
 Der Smoke-Test wird lokal gegen eine laufende Anwendung ausgeführt und ist in der CI Pipeline eingebunden.
 
+Wichtig: Die API sollte für lokale E2E-Läufe mit `MINERALVAULT_DB_PATH` gestartet werden. Ohne diese Variable nutzt die API die normale lokale Datenbank.
+
 ## Voraussetzungen
 
 1. API mit E2E-Testdatenbank starten:
 
    ```bash
    $env:MINERALVAULT_DB_PATH="tests/MineralCollection.Tests.E2E/TestData/minerals.e2e.db"
-   dotnet run --project src/MineralCollection.API
+   dotnet run --project src/MineralCollection.API --launch-profile http
    ```
 
 2. Frontend starten:

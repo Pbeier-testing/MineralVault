@@ -40,7 +40,7 @@ Statuswerte:
 | R4.13 Numerische Nummernsortierung | UTC-SORT-003 | Unit | xUnit | Covered | `2` vor `10` |
 | R5.1 Tabellenansicht anzeigen | E2E-NAV-002, E2E-TABLE-001 | E2E | Playwright | Covered | Tabellenansicht wird im Navigationstest sichtbar |
 | R5.2 Tabellenspalten | E2E-TABLE-001, ITC-CSV-001 | E2E/Integration | Playwright, xUnit | Covered | Erwartete Tabellenspalten werden im E2E-Test geprüft; CSV-Felder bleiben als Integrationstest offen |
-| R5.3 Inline-Bearbeitung | Open | E2E | Playwright | Open | Testfall noch formulieren |
+| R5.3 Inline-Bearbeitung | E2E-SAVE-002 | E2E | Playwright | Covered | Bearbeitung eines Tabellenfelds wird im E2E-Test geprüft |
 | R5.4 Jahresfelder bearbeiten | Open | E2E | Playwright | Open | Testfall noch formulieren |
 | R5.5 Jahresfelder per Stepper bearbeiten | Open | E2E/Manual | Playwright optional | Open | Testfall noch formulieren |
 | R6.1 Neues Mineral hinzufügen | UTC-CREATE-001, UTC-CREATE-003, E2E-CREATE-001 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests und E2E-Workflow vorhanden |
@@ -58,9 +58,9 @@ Statuswerte:
 | R8.4 Ausgewählte Koordinaten anzeigen | E2E-COORD-002 | E2E | Playwright | Covered | Popup-Anzeige wird nach Kartenauswahl im E2E-Test geprüft |
 | R8.5 Koordinatenauswahl abbrechen | UTC-COORD-002, E2E-COORD-001 | Unit/E2E | xUnit, Playwright | Covered | Abbrechen nach Kartenauswahl behält die Originalkoordinaten |
 | R8.6 Koordinatenauswahl übernehmen | UTC-COORD-003, E2E-COORD-002 | Unit/E2E | xUnit, Playwright | Covered | Übernahme in ViewModel und Tabellenzeile wird geprüft |
-| R9.1 Änderungen speichern | UTC-SAVE-001, UTC-SAVE-002, UTC-SAVE-003, UTC-SAVE-004, UTC-SAVE-006 | Unit/Integration/E2E | xUnit, Playwright | Covered | Unit-Tests fürs Speichern vorhanden; Integration offen |
+| R9.1 Änderungen speichern | UTC-SAVE-001, UTC-SAVE-002, UTC-SAVE-003, UTC-SAVE-004, UTC-SAVE-006, E2E-SAVE-001, E2E-SAVE-002 | Unit/Integration/E2E | xUnit, Playwright | Covered | Unit-Tests und E2E-Tests fürs Speichern vorhanden |
 | R9.2 Neue Mineralien speichern | UTC-SAVE-001, ITC-API-001 | Unit/Integration | xUnit | Covered | POST im ViewModel und API-Persistenz getestet |
-| R9.3 Geänderte Mineralien speichern | UTC-SAVE-002, UTC-SAVE-006, ITC-API-002 | Unit/Integration | xUnit | Covered | PUT im ViewModel nur für geänderte Einträge und API-Persistenz getestet |
+| R9.3 Geänderte Mineralien speichern | UTC-SAVE-002, UTC-SAVE-006, ITC-API-002, E2E-SAVE-002 | Unit/Integration/E2E | xUnit, Playwright | Covered | PUT im ViewModel nur für geänderte Einträge |
 | R9.4 Mineral löschen | UTC-DELETE-002, UTC-DELETE-003, E2E-DELETE-001, E2E-DELETE-002 | Unit/E2E | xUnit, Playwright | Covered | Unit-Tests fürs Löschen vorhanden; E2E offen |
 | R9.5 Löschbestätigung | E2E-DELETE-001, E2E-DELETE-002 | E2E | Playwright | Covered | Bestätigungsdialog wird im E2E-Test geprüft |
 | R9.6 Löschung abbrechen | UTC-DELETE-001, E2E-DELETE-001 | Unit/E2E | xUnit, Playwright | Covered | Abbruch erhält die Tabellenzeile im E2E-Test |

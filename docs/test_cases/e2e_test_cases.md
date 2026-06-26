@@ -104,6 +104,36 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 - Die Anwendung zeigt eine sichtbare Fehlermeldung.
 - Die Meldung enthält die Fehlermeldung zum Fundjahr.
 
+## E2E-SAVE-001 - Speichern ohne Änderungen zeigt Hinweis
+
+**Related Requirements:** R9.1  
+**Status:** Automated  
+**Test Level:** E2E  
+**Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer wechselt in die Tabellenansicht.
+- Der Benutzer klickt auf `Speichern`, ohne vorher ein Tabellenfeld zu ändern.
+
+**Expected Result:**
+- Die Anwendung zeigt den Hinweis, dass keine Änderungen zum Speichern vorhanden sind.
+
+## E2E-SAVE-002 - Geänderte Tabellenzeile speichern
+
+**Related Requirements:** R5.3, R9.1, R9.3  
+**Status:** Automated  
+**Test Level:** E2E  
+**Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer wechselt in die Tabellenansicht.
+- Der Benutzer ändert den Fundort einer bestehenden Mineralienzeile.
+- Der Benutzer klickt auf `Speichern`.
+
+**Expected Result:**
+- Die Anwendung zeigt eine Erfolgsmeldung.
+- Die Änderung wird als speicherrelevant erkannt.
+
 ## E2E-COORD-001 - Koordinaten-Popup abbrechen
 
 **Related Requirements:** R8.2, R8.5  

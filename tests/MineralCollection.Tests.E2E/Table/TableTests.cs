@@ -115,4 +115,75 @@ public class TableTests
 
         Assert.Contains("Fundjahr muss zwischen", saveStatusText);
     }
+
+    [Fact]
+    [Trait("TestLevel", "E2E")]
+    [Trait("TestCase", "E2E-SAVE-001")]
+    [Trait("Requirement", "R9.1")]
+    public async Task TableView_WhenSavedWithoutChanges_ShowsNoChangesMessage()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await E2ETestContext.LaunchBrowserAsync(playwright);
+        var page = await browser.NewPageAsync();
+
+        await page.GotoAsync(E2ETestContext.BaseUrl);
+        await page.WaitForSelectorAsync("[data-testid='map-view']");
+
+        await page.ClickAsync("[data-testid='nav-table-view']");
+        await page.WaitForSelectorAsync("[data-testid='minerals-table']");
+
+        await page.ClickAsync("[data-testid='save-minerals-button']");
+
+        var saveStatus = page.Locator("[data-testid='save-status-message']");
+        await saveStatus.WaitForAsync();
+
+        var saveStatusText = await saveStatus.InnerTextAsync();
+
+        Assert.Contains("Keine Änderungen zum Speichern.", saveStatusText);
+    }
+
+    [Fact]
+    [Trait("TestLevel", "E2E")]
+    [Trait("TestCase", "E2E-SAVE-002")]
+    [Trait("Requirement", "R5.3")]
+    [Trait("Requirement", "R9.1")]
+    [Trait("Requirement", "R9.3")]
+    public async Task TableView_WhenExistingMineralIsChangedAndSaved_ShowsSuccessMessage()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await E2ETestContext.LaunchBrowserAsync(playwright);
+        var page = await browser.NewPageAsync();
+
+        await page.GotoAsync(E2ETestContext.BaseUrl);
+        await page.WaitForSelectorAsync("[data-testid='map-view']");
+
+        await page.ClickAsync("[data-testid='nav-table-view']");
+        await page.WaitForSelectorAsync("[data-testid='minerals-table']");
+
+        var firstRow = page.Locator("[data-testid='mineral-table-row']").First;
+        var locationInput = firstRow.Locator("[data-testid='mineral-location-input']");
+        var originalLocation = await locationInput.InputValueAsync();
+        var updatedLocation = $"E2E-Ort-{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
+
+        try
+        {
+            await locationInput.FillAsync(updatedLocation);
+            await locationInput.PressAsync("Tab");
+            await page.ClickAsync("[data-testid='save-minerals-button']");
+
+            var saveStatus = page.Locator("[data-testid='save-status-message']");
+            await saveStatus.WaitForAsync();
+
+            var saveStatusText = await saveStatus.InnerTextAsync();
+
+            Assert.Contains("Änderungen gespeichert.", saveStatusText);
+        }
+        finally
+        {
+            await locationInput.FillAsync(originalLocation);
+            await locationInput.PressAsync("Tab");
+            await page.ClickAsync("[data-testid='save-minerals-button']");
+            await page.Locator("[data-testid='save-status-message']").WaitForAsync();
+        }
+    }
 }
