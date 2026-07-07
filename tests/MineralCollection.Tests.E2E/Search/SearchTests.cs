@@ -41,6 +41,39 @@ public class SearchTests
         await WaitForMineralCountAsync(page, initialCount);
     }
 
+    [Fact]
+    [Trait("TestLevel", "E2E")]
+    [Trait("TestCase", "E2E-SEARCH-002")]
+    [Trait("Requirement", "R4.2")]
+    [Trait("Requirement", "R4.9")]
+    public async Task TableSearch_WhenSearchTermMatchesMineral_FiltersTableRows()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await E2ETestContext.LaunchBrowserAsync(playwright);
+        var page = await browser.NewPageAsync();
+
+        await page.GotoAsync(E2ETestContext.BaseUrl);
+        await page.WaitForSelectorAsync("[data-testid='map-view']");
+
+        await page.ClickAsync("[data-testid='nav-table-view']");
+        await page.WaitForSelectorAsync("[data-testid='minerals-table']");
+
+        var rows = page.Locator("[data-testid='mineral-table-row']");
+        var initialRowCount = await rows.CountAsync();
+        Assert.True(initialRowCount > 1);
+
+        await page.FillAsync("[data-testid='table-search-input']", "Coelestin");
+        await WaitForTableRowCountAsync(page, 1);
+
+        var filteredRow = rows.First;
+        var mineralName = await filteredRow.Locator("[data-testid='mineral-name-input']").InputValueAsync();
+
+        Assert.Contains("Coelestin", mineralName);
+
+        await page.FillAsync("[data-testid='table-search-input']", string.Empty);
+        await WaitForTableRowCountAsync(page, initialRowCount);
+    }
+
     private static async Task<int> ReadMineralCountAsync(IPage page)
     {
         var text = await page.Locator("[data-testid='mineral-count']").InnerTextAsync();
@@ -57,5 +90,12 @@ public class SearchTests
                 return element?.textContent?.trim().startsWith(`${expected} `);
             }",
             new object[] { "mineral-count", expectedCount });
+    }
+
+    private static async Task WaitForTableRowCountAsync(IPage page, int expectedCount)
+    {
+        await page.WaitForFunctionAsync(
+            @"expected => document.querySelectorAll('[data-testid=""mineral-table-row""]').length === expected",
+            expectedCount);
     }
 }

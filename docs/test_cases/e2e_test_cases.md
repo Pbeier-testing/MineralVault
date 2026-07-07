@@ -59,6 +59,22 @@ E2E Tests prüfen zentrale Benutzerflüsse im Browser. Diese Testfälle sind fü
 - Die Mineralienanzahl wird aktualisiert.
 - Nach dem Leeren der Suche wird die ursprüngliche Mineralienanzahl wieder angezeigt.
 
+## E2E-SEARCH-002 - Suche filtert Tabellenzeilen
+
+**Related Requirements:** R4.2, R4.9  
+**Status:** Automated  
+**Test Level:** E2E  
+**Automation:** Playwright  
+
+**Execution:**
+- Der Benutzer wechselt in die Tabellenansicht.
+- Der Benutzer sucht nach `Coelestin`.
+- Der Benutzer leert das Suchfeld anschließend wieder.
+
+**Expected Result:**
+- Die Tabelle zeigt nur passende Suchtreffer.
+- Nach dem Leeren der Suche wird die ursprüngliche Anzahl an Tabellenzeilen wieder angezeigt.
+
 ## E2E-TABLE-001 - Tabellenansicht zeigt erwartete Spalten
 
 **Related Requirements:** R5.1, R5.2  
